@@ -17,11 +17,11 @@ namespace Komunikator
         }
         static void Test_DB_connect()
         {
-            string host = "oracle1.pkif.us.edu.pl";
-            int port = 1521;
-            string sid = "umain.pkif.us.edu.pl";
-            string user = "RT_mlindel";
-            string password = "oracle";
+            string host = "";
+            int port = 0;
+            string sid = "";
+            string user = "";
+            string password = "";
 
             Console.WriteLine("Proba");
             OracleConnection con = DataBase.GetConnect(host, port, sid, user, password);
@@ -39,11 +39,11 @@ namespace Komunikator
         }
         static void Test_DB_select()
         {
-            string host = "oracle1.pkif.us.edu.pl";
-            int port = 1521;
-            string sid = "umain.pkif.us.edu.pl";
-            string user = "RT_mlindel";
-            string password = "oracle";
+            string host = "";
+            int port = 0;
+            string sid = "";
+            string user = "";
+            string password = "";
 
             OracleConnection con = DataBase.GetConnect(host, port, sid, user, password);
             con.Open();
