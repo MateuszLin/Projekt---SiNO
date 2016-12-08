@@ -39,12 +39,24 @@ namespace Komunikator
         }
 
 
+        static void Test3_TCP_Server()
+        {
+            TCP_Communication test = new TCP_Communication();
+            test.Server();
+        }
+
+        static void Test4_Ftp_Read()
+        {
+            FTP_Communication test = new FTP_Communication();
+            test.ReadFileFromFTP("ftp://......", "login", "password");
+        }
 
         public static void StartTest()
         {
             //Test1_Ftp_Upload();
-            Test_DB_connect();
-
+            //Test_DB_connect();
+            //Test3_TCP_Server();
+            Test4_Ftp_Read();
         }
 
     }

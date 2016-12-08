@@ -35,5 +35,29 @@ namespace Komunikator
             response.Close();
         }
 
+
+        /// <summary>
+        /// Metoda czytajaca plik z serwera FTP, nazwa pliku podana w url.
+        /// </summary>
+        public void ReadFileFromFTP(string url, string username, string password)
+        {
+            WebClient request = new WebClient();
+            request.Credentials = new NetworkCredential(username, password);
+
+            try
+            {
+                byte[] newFileData = request.DownloadData(url);
+                string fileString = System.Text.Encoding.UTF8.GetString(newFileData);
+                Console.WriteLine("--------Odczyt pliku z FTP, TEST-----------");
+                Console.WriteLine(fileString);
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine("Nieudane odczytanie pliku z FTP");
+                Console.WriteLine(ex);
+            }
+        }
+
     }
 }
