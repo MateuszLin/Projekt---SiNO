@@ -71,7 +71,7 @@ namespace Komunikator
         {
             //Test1_Ftp_Upload();
             //Test_DB_connect();
-            Test_DB_select();
+            //Test_DB_select();
             //Test3_TCP_Server();
             //Test4_Ftp_Read();
         }

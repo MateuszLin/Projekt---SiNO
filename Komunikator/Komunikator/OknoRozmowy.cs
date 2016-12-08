@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Komunikator
 {
-    public partial class Form1 : Form
+    public partial class OknoRozmowy : Form
     {
-        public Form1()
+        public OknoRozmowy()
         {
             InitializeComponent();
             // ROZPOCZECIE TESTÓW
@@ -34,7 +34,14 @@ namespace Komunikator
 
         private void buttonExit_Click(object sender, EventArgs e)
         {
+            Application.Exit();
+        }
+
+        private void buttonLogout_Click(object sender, EventArgs e)
+        {
             this.Close();
+            OknoLogowania oknoLogowania = new OknoLogowania();
+            oknoLogowania.Show();
         }
     }
 }

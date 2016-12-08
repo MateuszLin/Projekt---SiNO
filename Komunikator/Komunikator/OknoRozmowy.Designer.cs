@@ -1,6 +1,6 @@
 ﻿namespace Komunikator
 {
-    partial class Form1
+    partial class OknoRozmowy
     {
         /// <summary>
         /// Required designer variable.
@@ -33,6 +33,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.buttonExit = new System.Windows.Forms.Button();
+            this.buttonLogout = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonWyslij
@@ -82,18 +83,30 @@
             this.buttonExit.UseVisualStyleBackColor = true;
             this.buttonExit.Click += new System.EventHandler(this.buttonExit_Click);
             // 
-            // Form1
+            // buttonLogout
+            // 
+            this.buttonLogout.Location = new System.Drawing.Point(303, 41);
+            this.buttonLogout.Name = "buttonLogout";
+            this.buttonLogout.Size = new System.Drawing.Size(75, 23);
+            this.buttonLogout.TabIndex = 5;
+            this.buttonLogout.Text = "Logout";
+            this.buttonLogout.UseVisualStyleBackColor = true;
+            this.buttonLogout.Click += new System.EventHandler(this.buttonLogout_Click);
+            // 
+            // OknoRozmowy
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(390, 261);
+            this.Controls.Add(this.buttonLogout);
             this.Controls.Add(this.buttonExit);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.buttonOdbierz);
             this.Controls.Add(this.buttonWyslij);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "OknoRozmowy";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Rozmowa";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -106,6 +119,7 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button buttonExit;
+        private System.Windows.Forms.Button buttonLogout;
     }
 }
 
