@@ -17,14 +17,14 @@ namespace Komunikator
         }
         static void Test_DB_connect()
         {
-            string host = "";
-            int port = 0;
-            string sid = "";
-            string user = "";
-            string password = "";
+            string host = "oracle1.pkif.us.edu.pl";
+            int port = 1521;
+            string sid = "umain.pkif.us.edu.pl";
+            string user = "RT_mlindel";
+            string password = "oracle";
 
             Console.WriteLine("Proba");
-            OracleConnection con = ConnectDataBase.GetConnect(host, port, sid, user, password);
+            OracleConnection con = DataBase.GetConnect(host, port, sid, user, password);
             Console.WriteLine("Lacze sie z: " + con);
             try
             {
@@ -36,6 +36,22 @@ namespace Komunikator
                 Console.WriteLine("Blad, ", msg);
             }
     
+        }
+        static void Test_DB_select()
+        {
+            string host = "oracle1.pkif.us.edu.pl";
+            int port = 1521;
+            string sid = "umain.pkif.us.edu.pl";
+            string user = "RT_mlindel";
+            string password = "oracle";
+
+            OracleConnection con = DataBase.GetConnect(host, port, sid, user, password);
+            con.Open();
+
+            string cmd = "Select Nrprac, imie, nazwisko from pracownik";
+            DataBase.GetSelect(cmd, con);
+            con.Close();
+            con.Dispose();
         }
 
 
@@ -55,8 +71,9 @@ namespace Komunikator
         {
             //Test1_Ftp_Upload();
             //Test_DB_connect();
+            Test_DB_select();
             //Test3_TCP_Server();
-            Test4_Ftp_Read();
+            //Test4_Ftp_Read();
         }
 
     }
