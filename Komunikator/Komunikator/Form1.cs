@@ -29,7 +29,7 @@ namespace Komunikator
         private void buttonOdbierz_Click(object sender, EventArgs e)
         {
             Console.WriteLine("Naciśnięto Odbierz");
-            textBox2.Text = "Odebrano i wyświetlono w oknie";
+            textBox2.Text += "Odebrano i wyświetlono w oknie\n";
         }
 
         private void buttonExit_Click(object sender, EventArgs e)
