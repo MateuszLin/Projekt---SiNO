@@ -19,5 +19,22 @@ namespace Komunikator
             Testy.StartTest();
             
         }
+
+        private void buttonWyslij_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine("Naciśnięto Wyślij");
+            Console.WriteLine("Wysłano: " + textBox1.Text);
+        }
+
+        private void buttonOdbierz_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine("Naciśnięto Odbierz");
+            textBox2.Text = "Odebrano i wyświetlono w oknie";
+        }
+
+        private void buttonExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

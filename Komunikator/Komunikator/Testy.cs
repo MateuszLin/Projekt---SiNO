@@ -56,7 +56,7 @@ namespace Komunikator
             //Test1_Ftp_Upload();
             //Test_DB_connect();
             //Test3_TCP_Server();
-            Test4_Ftp_Read();
+            //Test4_Ftp_Read();
         }
 
     }
