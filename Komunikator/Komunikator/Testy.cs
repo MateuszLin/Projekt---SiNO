@@ -17,14 +17,10 @@ namespace Komunikator
         }
         static void Test_DB_connect()
         {
-            string host = "";
-            int port = 0;
-            string sid = "";
-            string user = "";
-            string password = "";
+            
 
             Console.WriteLine("Proba");
-            OracleConnection con = DataBase.GetConnect(host, port, sid, user, password);
+            OracleConnection con = DataBase.getConnect();
             Console.WriteLine("Lacze sie z: " + con);
             try
             {
@@ -39,19 +35,36 @@ namespace Komunikator
         }
         static void Test_DB_select()
         {
-            string host = "";
-            int port = 0;
-            string sid = "";
-            string user = "";
-            string password = "";
-
-            OracleConnection con = DataBase.GetConnect(host, port, sid, user, password);
+          
+            OracleConnection con = DataBase.getConnect();
             con.Open();
 
             string cmd = "Select Nrprac, imie, nazwisko from pracownik";
-            DataBase.GetSelect(cmd, con);
+            DataBase.querySelect(cmd, con);
             con.Close();
             con.Dispose();
+        }
+
+
+        static void Test_DB_update()
+        {
+            OracleConnection con = DataBase.getConnect();
+            con.Open();
+            string cmd = "UPDATE pracownik set email = :email where nrprac = :nrprac";
+            DataBase.doUpdate(cmd, con);
+            con.Close();
+            con.Dispose();
+        }
+
+        static void Test_DB_insert()
+        {
+            OracleConnection con = DataBase.getConnect();
+            con.Open();
+            string cmd = "Insert into pracownik (nrprac, imie, nazwisko) values (:nrprac, :imie, :nazwisko)";
+            DataBase.doInsert(cmd, con);
+            con.Close();
+            con.Dispose();
+
         }
 
 
@@ -70,8 +83,12 @@ namespace Komunikator
         public static void StartTest()
         {
             //Test1_Ftp_Upload();
+
             //Test_DB_connect();
-            Test_DB_select();
+            //Test_DB_select();
+            //Test_DB_update();
+            Test_DB_insert();
+
             //Test3_TCP_Server();
             //Test4_Ftp_Read();
         }
