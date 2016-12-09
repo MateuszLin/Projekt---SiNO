@@ -35,6 +35,12 @@ namespace Komunikator
             Application.Exit();
         }
 
+        private void oProgramieToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(@"Komuikator internetowy działąjący za pomocą bazy danych.
+                            Tworzony przez Michała i Mateusza", "O programie");
+        }
+
         // Poniższa metoda nie działa ponieważ w metodzie wyloguj używamy this.Close() 
         // Więc po nadpisaniu metody Close() opcja wyloguj kończy aplikację.
         /*
