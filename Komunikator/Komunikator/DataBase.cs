@@ -66,7 +66,7 @@ namespace Komunikator
         }
 
 
-        public string getPassword(string loginn)
+        public static string getPassword(string loginn)
         {
             string pass = "NULL";
             string cmd = "Select pass from sinousers where login = :login";

@@ -23,13 +23,18 @@ namespace Komunikator
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
-            if (LoginBox.Text == "admin" && PasswordBox.Text == "admin")
+            //if (LoginBox.Text == "admin" && PasswordBox.Text == "admin")
+            if (PasswordBox.Text == DataBase.getPassword(LoginBox.Text))
             {
                 this.Hide();
                 //OknoRozmowy oknoRozmowy = new OknoRozmowy();
                 //oknoRozmowy.Show();
                 OknoProgramu oknoProgramu = new OknoProgramu();
                 oknoProgramu.Show();
+            }
+            else
+            {
+                MessageBox.Show("Logowanie nieudane", "Błąd logowania");
             }
         }
 

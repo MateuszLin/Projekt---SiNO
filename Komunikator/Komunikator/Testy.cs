@@ -71,8 +71,9 @@ namespace Komunikator
         static void Test_DB_getpass()
         {
             string login = "admin";
-            DataBase pass = new DataBase();
-            Console.WriteLine("Odebralem " + pass.getPassword(login));
+            //DataBase pass = new DataBase();
+            //----------ZMIANA TESTU Z POWODU ZMIANY METODY NA STAYCZNĄ----------
+            Console.WriteLine("Odebralem " + DataBase.getPassword(login));
         }
 
 
