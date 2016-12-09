@@ -10,21 +10,28 @@ namespace Komunikator
 {
     class DataBase
     {
-        private static string GetConnectionString(string host, int port, string sid, string user, string password)
+        private static string GetConnectionString()
         {
+
+            string host = "";
+            int port = 0;
+            string sid = "";
+            string user = "";
+            string password = "";
+
             string conString = "Data Source=(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = "
                  + host + ")(PORT = " + port + "))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = "
                  + sid + ")));Password=" + password + ";User ID=" + user;
             return conString;
         }
-        public static OracleConnection GetConnect(string host, int port, string sid, string user, string password)
+        public static OracleConnection getConnect()
         {
             OracleConnection oraConn = new OracleConnection();
-            oraConn.ConnectionString = GetConnectionString(host, port, sid, user, password);
+            oraConn.ConnectionString = GetConnectionString();
 
             return oraConn;
         }
-        public static void GetSelect(string cmd, OracleConnection con)
+        public static void querySelect(string cmd, OracleConnection con)
         {
             
             OracleCommand comand = new OracleCommand();
@@ -55,6 +62,46 @@ namespace Komunikator
             }
 
             
+        }
+
+        public static void doInsert(string cmd, OracleConnection con)
+        {
+            //"Insert into pracownik (nrprac, imie, nazwisko) values (:nrprac, :imie, :nazwisko)"
+
+            OracleCommand command = new OracleCommand(cmd, con);
+
+            try
+            {
+                command.Parameters.Add(new OracleParameter("nrprac", 999));
+                command.Parameters.Add(new OracleParameter("imie", "Rysiek"));
+                command.Parameters.Add(new OracleParameter("nazwisko", "zKlanu"));
+
+                int rowCount = command.ExecuteNonQuery();
+                Console.WriteLine("Dodano wierszy: " + rowCount);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Blad " + e);
+                
+            }
+        }
+
+        public static void doUpdate(string cmd, OracleConnection con)
+        {
+            OracleCommand command = new OracleCommand(cmd, con);
+
+            //"UPDATE pracownik set email = :email where nrprac = :nrprac"
+            try
+            {
+                command.Parameters.Add(new OracleParameter("email", "test@mail"));
+                command.Parameters.Add(new OracleParameter("nrprac", 41));
+
+                command.ExecuteNonQuery();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Blad " + e);
+            }
         }
     }
 }
