@@ -39,7 +39,8 @@ namespace Komunikator
             OracleConnection con = DataBase.getConnect();
             con.Open();
 
-            string cmd = "Select Nrprac, imie, nazwisko from pracownik";
+           string cmd = "Select Nrprac, imie, nazwisko from pracownik where nrprac = 2";
+           
             DataBase.querySelect(cmd, con);
             con.Close();
             con.Dispose();
@@ -67,6 +68,13 @@ namespace Komunikator
 
         }
 
+        static void Test_DB_getpass()
+        {
+            string login = "admin";
+            DataBase pass = new DataBase();
+            Console.WriteLine("Odebralem " + pass.getPassword(login));
+        }
+
 
         static void Test3_TCP_Server()
         {
@@ -87,8 +95,8 @@ namespace Komunikator
             //Test_DB_connect();
             //Test_DB_select();
             //Test_DB_update();
-            Test_DB_insert();
-
+            // Test_DB_insert();
+            Test_DB_getpass();
             //Test3_TCP_Server();
             //Test4_Ftp_Read();
         }
