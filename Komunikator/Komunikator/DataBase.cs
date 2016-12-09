@@ -5,19 +5,22 @@ using System.Text;
 using System.Threading.Tasks;
 using Oracle.DataAccess.Client;
 using System.Data.Common;
+using System.Data;
 
 namespace Komunikator
 {
     class DataBase
     {
+        
+
         private static string GetConnectionString()
         {
 
-            string host = "";
-            int port = 0;
-            string sid = "";
-            string user = "";
-            string password = "";
+            string host = "oracle1.pkif.us.edu.pl";
+            int port = 1521;
+            string sid = "umain.pkif.us.edu.pl";
+            string user = "RT_mlindel";
+            string password = "oracle";
 
             string conString = "Data Source=(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = "
                  + host + ")(PORT = " + port + "))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = "
@@ -60,9 +63,33 @@ namespace Komunikator
                     }
                 }
             }
-
-            
         }
+
+
+        public string getPassword(string loginn)
+        {
+            string pass = "NULL";
+            string cmd = "Select pass from sinousers where login = :login";
+            OracleConnection con = getConnect();
+            OracleCommand command = new OracleCommand(cmd, con);
+            command.Parameters.Add(new OracleParameter("login", loginn));
+            con.Open();
+
+            using (DbDataReader reader = command.ExecuteReader())
+            {
+                if (reader.HasRows)
+                {
+                    while(reader.Read())
+                    {
+                    int passIndex = reader.GetOrdinal("pass");
+                        pass = reader.GetString(passIndex);
+                    }
+                }
+            }
+
+                return pass;
+        }
+
 
         public static void doInsert(string cmd, OracleConnection con)
         {
