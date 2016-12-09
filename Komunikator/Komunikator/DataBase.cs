@@ -5,11 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Oracle.DataAccess.Client;
 using System.Data.Common;
+using System.Data;
 
 namespace Komunikator
 {
     class DataBase
     {
+        
+
         private static string GetConnectionString()
         {
 
@@ -60,9 +63,33 @@ namespace Komunikator
                     }
                 }
             }
-
-            
         }
+
+
+        public string getPassword(string loginn)
+        {
+            string pass = "NULL";
+            string cmd = "Select pass from sinousers where login = :login";
+            OracleConnection con = getConnect();
+            OracleCommand command = new OracleCommand(cmd, con);
+            command.Parameters.Add(new OracleParameter("login", loginn));
+            con.Open();
+
+            using (DbDataReader reader = command.ExecuteReader())
+            {
+                if (reader.HasRows)
+                {
+                    while(reader.Read())
+                    {
+                    int passIndex = reader.GetOrdinal("pass");
+                        pass = reader.GetString(passIndex);
+                    }
+                }
+            }
+
+                return pass;
+        }
+
 
         public static void doInsert(string cmd, OracleConnection con)
         {
