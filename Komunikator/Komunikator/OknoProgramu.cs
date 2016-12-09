@@ -34,5 +34,17 @@ namespace Komunikator
         {
             Application.Exit();
         }
+
+        // Poniższa metoda nie działa ponieważ w metodzie wyloguj używamy this.Close() 
+        // Więc po nadpisaniu metody Close() opcja wyloguj kończy aplikację.
+        /*
+        /// <summary>
+        /// Metoda nadpisuje przycisk okna X aby on nie zamykał formatki lecz cały program.
+        /// </summary>
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
+        */
     }
 }

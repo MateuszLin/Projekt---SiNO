@@ -71,6 +71,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GlobalVariables.cs" />
     <Compile Include="DataBase.cs" />
     <Compile Include="FTP_Communication.cs" />
     <Compile Include="OknoLogowania.cs">

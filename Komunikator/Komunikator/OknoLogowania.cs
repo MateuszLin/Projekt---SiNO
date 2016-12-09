@@ -34,7 +34,9 @@ namespace Komunikator
             }
             else
             {
-                MessageBox.Show("Logowanie nieudane", "Błąd logowania");
+                if (GlobalVariables.loginCounter == 0) Application.Exit();
+                MessageBox.Show("Logowanie nieudane!\nPozostałe próby: " + GlobalVariables.loginCounter, "Błąd logowania");
+                GlobalVariables.loginCounter--;
             }
         }
 
