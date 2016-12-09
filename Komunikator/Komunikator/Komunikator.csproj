@@ -79,6 +79,12 @@
     <Compile Include="OknoLogowania.Designer.cs">
       <DependentUpon>OknoLogowania.cs</DependentUpon>
     </Compile>
+    <Compile Include="OknoProgramu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OknoProgramu.Designer.cs">
+      <DependentUpon>OknoProgramu.cs</DependentUpon>
+    </Compile>
     <Compile Include="OknoRozmowy.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,6 +97,9 @@
     <Compile Include="Testy.cs" />
     <EmbeddedResource Include="OknoLogowania.resx">
       <DependentUpon>OknoLogowania.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OknoProgramu.resx">
+      <DependentUpon>OknoProgramu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OknoRozmowy.resx">
       <DependentUpon>OknoRozmowy.cs</DependentUpon>

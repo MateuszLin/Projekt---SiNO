@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.buttonWyslij = new System.Windows.Forms.Button();
             this.buttonOdbierz = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.buttonExit = new System.Windows.Forms.Button();
-            this.buttonLogout = new System.Windows.Forms.Button();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.SuspendLayout();
             // 
             // buttonWyslij
@@ -73,33 +73,16 @@
             this.textBox2.Size = new System.Drawing.Size(276, 137);
             this.textBox2.TabIndex = 3;
             // 
-            // buttonExit
+            // contextMenuStrip1
             // 
-            this.buttonExit.Location = new System.Drawing.Point(303, 12);
-            this.buttonExit.Name = "buttonExit";
-            this.buttonExit.Size = new System.Drawing.Size(75, 23);
-            this.buttonExit.TabIndex = 4;
-            this.buttonExit.Text = "Exit";
-            this.buttonExit.UseVisualStyleBackColor = true;
-            this.buttonExit.Click += new System.EventHandler(this.buttonExit_Click);
-            // 
-            // buttonLogout
-            // 
-            this.buttonLogout.Location = new System.Drawing.Point(303, 41);
-            this.buttonLogout.Name = "buttonLogout";
-            this.buttonLogout.Size = new System.Drawing.Size(75, 23);
-            this.buttonLogout.TabIndex = 5;
-            this.buttonLogout.Text = "Logout";
-            this.buttonLogout.UseVisualStyleBackColor = true;
-            this.buttonLogout.Click += new System.EventHandler(this.buttonLogout_Click);
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
             // OknoRozmowy
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(390, 261);
-            this.Controls.Add(this.buttonLogout);
-            this.Controls.Add(this.buttonExit);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.buttonOdbierz);
@@ -118,8 +101,7 @@
         private System.Windows.Forms.Button buttonOdbierz;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Button buttonExit;
-        private System.Windows.Forms.Button buttonLogout;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     }
 }
 

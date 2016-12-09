@@ -26,8 +26,10 @@ namespace Komunikator
             if (LoginBox.Text == "admin" && PasswordBox.Text == "admin")
             {
                 this.Hide();
-                OknoRozmowy oknoRozmowy = new OknoRozmowy();
-                oknoRozmowy.Show();
+                //OknoRozmowy oknoRozmowy = new OknoRozmowy();
+                //oknoRozmowy.Show();
+                OknoProgramu oknoProgramu = new OknoProgramu();
+                oknoProgramu.Show();
             }
         }
 
