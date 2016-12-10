@@ -78,6 +78,15 @@ namespace Komunikator
             DataBase.addUser("TEST", "haslo");
         }
 
+        static void Test_DB_getinfo()
+        {
+            //string[] info = DataBase.getUserInfo("Matek");
+            foreach (string x in DataBase.getUserInfo("Matek"))
+            {
+                Console.WriteLine(x);
+            }
+        }
+
         static void Test_DB_getpass()
         {
             string login = "admin";
@@ -109,7 +118,8 @@ namespace Komunikator
             // Test_DB_insert();
             //Test_DB_getpass();
             //Test_DB_updateProfile();
-            Test_DB_addUser();
+            //Test_DB_addUser();
+            Test_DB_getinfo();
             //Test3_TCP_Server();
             //Test4_Ftp_Read();
         }

@@ -112,7 +112,7 @@ namespace Komunikator
         /// Funkcja aktualizujaca informacje o uzytkownikach
         /// </summary>
         /// <param name="login"> string, login uzytkownika</param>
-        /// <param name="upThing">string, co chcemy zaktualizowac (imie, nazwisko, miejscowosc, emial, nrtelefonu)</param>
+        /// <param name="upThing">string, co chcemy zaktualizowac (imie, nazwisko, miejscowosc, email, nrtelefonu)</param>
         /// <param name="update"> string, wartosc na jaka chcemy zaktualizowac</param>
         public static void updateProfile(string login, string upThing, string update)  
         {
@@ -164,6 +164,62 @@ namespace Komunikator
             
         }
 
+
+        /// <summary>
+        /// Funkcja zwracajaca informacje uzytkownika o podanym loginie
+        /// </summary>
+        /// <param name="login">string, login od ktorego chcemy uzyskac informacje</param>
+        /// <returns></returns>
+        public static string[] getUserInfo(string login)
+        {
+            string cmd = "Select login, imie, nazwisko, miejscowosc, email, nrtelefonu from sinousers where login = :login";
+            string[] ret = new string[6];
+
+            try
+            {
+                OracleConnection con = getConnect();
+                OracleCommand command = new OracleCommand(cmd, con);
+                command.Parameters.Add("login", login);
+
+                con.Open();
+                using (DbDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            int[] index =
+                                {
+                                reader.GetOrdinal("login"),
+                                reader.GetOrdinal("imie"),
+                                reader.GetOrdinal("nazwisko"),
+                                reader.GetOrdinal("miejscowosc"),
+                                reader.GetOrdinal("email"),
+                                reader.GetOrdinal("nrtelefonu")
+                                };
+
+                            for (int x = 0; x < index.Length; x++)
+                            {
+                                if (reader.IsDBNull(index[x]))
+                                {
+                                    ret[x] = " ";
+                                }
+                                else
+                                {
+                                    ret[x] = reader.GetString(index[x]);
+                                }
+                            }
+                        
+                        }
+                        con.Close();
+                        con.Dispose();
+                    }
+                }
+            }
+            catch(Exception e) { Console.WriteLine("Blad, " + e); }
+
+            return ret;
+        }
 
 
         public static void doInsert(string cmd, OracleConnection con)
