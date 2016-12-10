@@ -13,20 +13,26 @@ namespace Komunikator
     {
         
 
+        /// <summary>
+        /// Funkcja zwracajaca dane do polaczenie sie z baza danych 
+        /// </summary>
+        /// <returns>string dane do polaczenia sie z baza danych</returns>
         private static string GetConnectionString()
         {
 
-            string host = "";
-            int port = 0;
-            string sid = "";
-            string user = "";
-            string password = "";
+            string host = "oracle1.pkif.us.edu.pl";
+            int port = 1521;
+            string sid = "umain.pkif.us.edu.pl";
+            string user = "RT_mlindel";
+            string password = "oracle";
 
             string conString = "Data Source=(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = "
                  + host + ")(PORT = " + port + "))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = "
                  + sid + ")));Password=" + password + ";User ID=" + user;
             return conString;
         }
+
+
         public static OracleConnection getConnect()
         {
             OracleConnection oraConn = new OracleConnection();
@@ -34,6 +40,8 @@ namespace Komunikator
 
             return oraConn;
         }
+
+
         public static void querySelect(string cmd, OracleConnection con)
         {
             
@@ -66,29 +74,96 @@ namespace Komunikator
         }
 
 
+        /// <summary>
+        /// Funkcja odczytujaca haslo uzytkownika z bazy danych.
+        /// </summary>
+        /// <param name="loginn">string, login uzytkownika</param>
+        /// <returns>string, haslo uzytkownika</returns>
         public static string getPassword(string loginn)
         {
             string pass = "NULL";
             string cmd = "Select pass from sinousers where login = :login";
-            OracleConnection con = getConnect();
-            OracleCommand command = new OracleCommand(cmd, con);
-            command.Parameters.Add(new OracleParameter("login", loginn));
-            con.Open();
-
-            using (DbDataReader reader = command.ExecuteReader())
+            try
             {
-                if (reader.HasRows)
+                OracleConnection con = getConnect();
+                OracleCommand command = new OracleCommand(cmd, con);
+                command.Parameters.Add(new OracleParameter("login", loginn));
+                con.Open();
+
+                using (DbDataReader reader = command.ExecuteReader())
                 {
-                    while(reader.Read())
+                    if (reader.HasRows)
                     {
-                    int passIndex = reader.GetOrdinal("pass");
-                        pass = reader.GetString(passIndex);
+                        while (reader.Read())
+                        {
+                            int passIndex = reader.GetOrdinal("pass");
+                            pass = reader.GetString(passIndex);
+                        }
                     }
                 }
             }
+            catch(Exception e) { Console.WriteLine("Blad, " + e); }
 
                 return pass;
         }
+
+
+        /// <summary>
+        /// Funkcja aktualizujaca informacje o uzytkownikach
+        /// </summary>
+        /// <param name="login"> string, login uzytkownika</param>
+        /// <param name="upThing">string, co chcemy zaktualizowac (imie, nazwisko, miejscowosc, emial, nrtelefonu)</param>
+        /// <param name="update"> string, wartosc na jaka chcemy zaktualizowac</param>
+        public static void updateProfile(string login, string upThing, string update)  
+        {
+            string cmd = "Update sinoUsers Set " + upThing + " = :" +  upThing + " where login = :login";
+
+            try
+            {
+                OracleConnection con = getConnect();
+                OracleCommand command = new OracleCommand(cmd, con);
+                    
+                command.Parameters.Add(new OracleParameter(upThing, update));
+                command.Parameters.Add(new OracleParameter("login", login));
+
+                con.Open();
+                command.ExecuteNonQuery();
+                Console.WriteLine("Zaktualizowano informacje o uzytkowniku");
+                con.Close();
+                con.Dispose();
+            }
+            catch (Exception e) { Console.WriteLine("Blad, " + e); }
+            
+        }
+
+
+        /// <summary>
+        /// Funkcja dodajaca uzytkownika do bazy danych
+        /// </summary>
+        /// <param name="login">string, login</param>
+        /// <param name="password">string haslo</param>
+        public static void addUser(string login, string password)
+        {
+            string cmd = "Insert into sinousers(login, pass) values(:login, :password)";
+
+            try
+            {
+                OracleConnection con = getConnect();
+                OracleCommand command = new OracleCommand(cmd, con);
+
+                command.Parameters.Add(new OracleParameter("login", login));
+                command.Parameters.Add(new OracleParameter("password", password));
+
+                con.Open();
+                command.ExecuteNonQuery();
+                Console.WriteLine("Dodano uzytkownika");
+                con.Close();
+                con.Dispose();
+            }
+            catch(Exception e) { Console.WriteLine("Blad, " + e); }
+            
+        }
+
 
 
         public static void doInsert(string cmd, OracleConnection con)
