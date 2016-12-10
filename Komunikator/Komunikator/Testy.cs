@@ -68,6 +68,16 @@ namespace Komunikator
 
         }
 
+        static void Test_DB_updateProfile()
+        {
+            DataBase.updateProfile("Matek", "imie", "Mateusz");
+        }
+
+        static void Test_DB_addUser()
+        {
+            DataBase.addUser("TEST", "haslo");
+        }
+
         static void Test_DB_getpass()
         {
             string login = "admin";
@@ -98,6 +108,8 @@ namespace Komunikator
             //Test_DB_update();
             // Test_DB_insert();
             //Test_DB_getpass();
+            //Test_DB_updateProfile();
+            Test_DB_addUser();
             //Test3_TCP_Server();
             //Test4_Ftp_Read();
         }
