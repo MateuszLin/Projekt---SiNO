@@ -15,21 +15,22 @@ namespace Komunikator
             //test.UploadFileToFtp("ftp://sino.prv.pl/", "sciezka do pliku", "login", "password");
             test.UploadFileToFtp("ftp://sino.cba.pl/sino.cba.pl/", "sciezka do pliku", "login", "password");
         }
-        static void Test_DB_connect()
+        static bool Test_DB_connect()
         {
-            
-
-            Console.WriteLine("Proba");
+            //Console.WriteLine("Proba");
             OracleConnection con = DataBase.getConnect();
-            Console.WriteLine("Lacze sie z: " + con);
+            //Console.WriteLine("Lacze sie z: " + con);
             try
             {
                 con.Open();
-                Console.WriteLine("Polaczono");
+                //Console.WriteLine("Polaczono");
+                return true;
+
             }
-            catch (Exception msg)
+            catch (Exception)
             {
-                Console.WriteLine("Blad, ", msg);
+                //Console.WriteLine("Blad, ", msg);
+                return false;
             }
     
         }

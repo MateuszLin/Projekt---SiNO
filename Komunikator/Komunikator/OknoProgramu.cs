@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace Komunikator
 {
@@ -20,6 +21,7 @@ namespace Komunikator
         private void rozmowaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OknoRozmowy oknoRozmowy = new OknoRozmowy();
+            //new Thread(() => new OknoRozmowy().Show()).Start();
             oknoRozmowy.Show();
         }
 
