@@ -24,6 +24,8 @@ namespace Komunikator
         {
             Console.WriteLine("Naciśnięto Wyślij");
             Console.WriteLine("Wysłano: " + textBox1.Text);
+            //-----------TYMCZASOWO PARAMETR ODBIORCA PRZYPISANY NA STAŁE!!!--------------
+            DataBase.sendMessage(textBox1.Text, "Matek", GlobalVariables.login);
         }
 
         private void buttonOdbierz_Click(object sender, EventArgs e)
