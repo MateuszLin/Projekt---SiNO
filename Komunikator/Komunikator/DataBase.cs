@@ -12,7 +12,6 @@ namespace Komunikator
     class DataBase
     {
         
-
         /// <summary>
         /// Funkcja zwracajaca dane do polaczenie sie z baza danych 
         /// </summary>
@@ -20,11 +19,11 @@ namespace Komunikator
         private static string GetConnectionString()
         {
 
-            string host = "oracle1.pkif.us.edu.pl";
-            int port = 1521;
-            string sid = "umain.pkif.us.edu.pl";
-            string user = "RT_mlindel";
-            string password = "oracle";
+            string host = "";
+            int port = 0;
+            string sid = "";
+            string user = "";
+            string password = "";
 
             string conString = "Data Source=(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = "
                  + host + ")(PORT = " + port + "))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = "
@@ -39,38 +38,6 @@ namespace Komunikator
             oraConn.ConnectionString = GetConnectionString();
 
             return oraConn;
-        }
-
-
-        public static void querySelect(string cmd, OracleConnection con)
-        {
-            
-            OracleCommand comand = new OracleCommand();
-            comand.CommandText = cmd;
-            comand.Connection = con;
-            
-            using (DbDataReader reader = comand.ExecuteReader())
-            {
-                if(reader.HasRows)
-                {
-                    while(reader.Read())
-                    {
-                        int nrprac = reader.GetOrdinal("NRPRAC");
-
-                        long idprac = Convert.ToInt64(reader.GetValue(0));
-
-                        int imieIndex = reader.GetOrdinal("IMIE");
-                        string imie = reader.GetString(1);
-
-                        int nazwiIndex = reader.GetOrdinal("NAZWISKO");
-                        string nazwi = reader.GetString(nazwiIndex);
-
-                        Console.WriteLine("Nrprac, "+ idprac);
-                        Console.WriteLine("Imie, "+ imie);
-                        Console.WriteLine("Nazwisko, "+ nazwi);
-                    }
-                }
-            }
         }
 
 
@@ -222,7 +189,7 @@ namespace Komunikator
         }
 
 
-        /// <summary>
+         /// <summary>
          /// Funckja wysylajaca wiadomosc
          /// </summary>
          /// <param name="msg">string, wiadomosc</param>
@@ -239,7 +206,7 @@ namespace Komunikator
  
                  command.Parameters.Add(new OracleParameter("msg", msg));
                  command.Parameters.Add(new OracleParameter("odbiorca", odbiorca));
-                command.Parameters.Add(new OracleParameter("nadawca", nadawca));
+                 command.Parameters.Add(new OracleParameter("nadawca", nadawca));
  
                  con.Open();
                  command.ExecuteNonQuery();
@@ -252,6 +219,13 @@ namespace Komunikator
              { Console.WriteLine("Blad, " + e); }
          }
  
+
+         /// <summary>
+         /// Funckja odbierajaca wiadomosci z bazy danych.
+         /// </summary>
+         /// <param name="odbiorca">string, login odbiorcy</param>
+         /// <param name="nadawca">string, login nadawcy</param>
+         /// <returns>string, wiadomosc dla obiorcy</returns>
          public static string getMessage(string odbiorca, string nadawca)
          {
              string cmd = "Select msg from sinorozmowy where nadawca = :nadawca and odbiorca = :odbiorca";
@@ -283,46 +257,45 @@ namespace Komunikator
  
              return msg;
          }
-
-
-        public static void doInsert(string cmd, OracleConnection con)
+        /// <summary>
+        /// Funkcja sprawdzajaca czy uzytkownik o podanym loginie jest online
+        /// </summary>
+        /// <param name="login">string, login uzytkownika</param>
+        /// <returns></returns>
+        public static Boolean isOnline(string login)
         {
-            //"Insert into pracownik (nrprac, imie, nazwisko) values (:nrprac, :imie, :nazwisko)"
-
-            OracleCommand command = new OracleCommand(cmd, con);
-
+            string cmd = "Select status from sinousers where login = :login";
+            Boolean isonline = false;
             try
             {
-                command.Parameters.Add(new OracleParameter("nrprac", 999));
-                command.Parameters.Add(new OracleParameter("imie", "Rysiek"));
-                command.Parameters.Add(new OracleParameter("nazwisko", "zKlanu"));
+                OracleConnection con = getConnect();
+                OracleCommand command = new OracleCommand(cmd, con);
 
-                int rowCount = command.ExecuteNonQuery();
-                Console.WriteLine("Dodano wierszy: " + rowCount);
+                command.Parameters.Add(new OracleParameter("login", login));
+
+                con.Open();
+                using (DbDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            int statusIndex = reader.GetOrdinal("status");
+                            int status = reader.GetInt32(statusIndex);
+
+                            if (status == 1) { isonline = true; }
+
+                        }
+                    }
+                }
             }
-            catch(Exception e)
-            {
-                Console.WriteLine("Blad " + e);
+            catch(Exception e) { Console.WriteLine("Blad, " + e); }
+           
+            return isonline;
+            
                 
-            }
         }
 
-        public static void doUpdate(string cmd, OracleConnection con)
-        {
-            OracleCommand command = new OracleCommand(cmd, con);
 
-            //"UPDATE pracownik set email = :email where nrprac = :nrprac"
-            try
-            {
-                command.Parameters.Add(new OracleParameter("email", "test@mail"));
-                command.Parameters.Add(new OracleParameter("nrprac", 41));
-
-                command.ExecuteNonQuery();
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine("Blad " + e);
-            }
-        }
     }
 }
