@@ -27,6 +27,7 @@ namespace Komunikator
             if (PasswordBox.Text == DataBase.getPassword(LoginBox.Text))
             {
                 this.Hide();
+                GlobalVariables.login = LoginBox.Text;
                 //OknoRozmowy oknoRozmowy = new OknoRozmowy();
                 //oknoRozmowy.Show();
                 OknoProgramu oknoProgramu = new OknoProgramu();
