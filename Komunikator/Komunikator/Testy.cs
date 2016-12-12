@@ -33,38 +33,8 @@ namespace Komunikator
             }
     
         }
-        static void Test_DB_select()
-        {
-            OracleConnection con = DataBase.getConnect();
-            con.Open();
-            string cmd = "Select Nrprac, imie, nazwisko from pracownik where nrprac = 2";
-           
-            DataBase.querySelect(cmd, con);
-            con.Close();
-            con.Dispose();
-        }
+      
 
-
-        static void Test_DB_update()
-        {
-            OracleConnection con = DataBase.getConnect();
-            con.Open();
-            string cmd = "UPDATE pracownik set email = :email where nrprac = :nrprac";
-            DataBase.doUpdate(cmd, con);
-            con.Close();
-            con.Dispose();
-        }
-
-        static void Test_DB_insert()
-        {
-            OracleConnection con = DataBase.getConnect();
-            con.Open();
-            string cmd = "Insert into pracownik (nrprac, imie, nazwisko) values (:nrprac, :imie, :nazwisko)";
-            DataBase.doInsert(cmd, con);
-            con.Close();
-            con.Dispose();
-
-        }
 
         static void Test_DB_updateProfile()
         {
@@ -106,6 +76,16 @@ namespace Komunikator
             test.ReadFileFromFTP("ftp://......", "login", "password");
         }
 
+        static void Test_DB_odbieranie()
+        {
+            Console.WriteLine(DataBase.getMessage("Matek", "admin"));
+        }
+
+        static void Test_DB_isOnline()
+        {
+            Console.WriteLine(DataBase.isOnline("Matek"));
+            Console.WriteLine(DataBase.isOnline("Michal"));
+        }
         public static void StartTest()
         {
             //Test1_Ftp_Upload();
@@ -117,9 +97,11 @@ namespace Komunikator
             //Test_DB_getpass();
             //Test_DB_updateProfile();
             //Test_DB_addUser();
-            Test_DB_getinfo();
+            // Test_DB_getinfo();
             //Test3_TCP_Server();
             //Test4_Ftp_Read();
+           // Test_DB_odbieranie();
+            //Test_DB_isOnline();
         }
 
     }
