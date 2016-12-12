@@ -20,13 +20,11 @@ namespace Komunikator
         private static string GetConnectionString()
         {
 
-            string host = "";
-            int port = ;
-            string sid = "";
-            string user = "";
-            string password = "";
-
-
+            string host = "oracle1.pkif.us.edu.pl";
+            int port = 1521;
+            string sid = "umain.pkif.us.edu.pl";
+            string user = "RT_mlindel";
+            string password = "oracle";
 
             string conString = "Data Source=(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = "
                  + host + ")(PORT = " + port + "))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = "
@@ -43,9 +41,8 @@ namespace Komunikator
             return oraConn;
         }
 
-        
+
         public static void querySelect(string cmd, OracleConnection con)
-            
         {
             
             OracleCommand comand = new OracleCommand();
@@ -126,7 +123,7 @@ namespace Komunikator
                 OracleConnection con = getConnect();
                 OracleCommand command = new OracleCommand(cmd, con);
                     
-                command.Parameters.Add(new OracleParameter("penis", update));
+                command.Parameters.Add(new OracleParameter(upThing, update));
                 command.Parameters.Add(new OracleParameter("login", login));
 
                 con.Open();
@@ -177,47 +174,12 @@ namespace Komunikator
         {
             string cmd = "Select login, imie, nazwisko, miejscowosc, email, nrtelefonu from sinousers where login = :login";
             string[] ret = new string[6];
-        /// Funckja wysylajaca wiadomosc
-        /// </summary>
-        /// <param name="msg">string, wiadomosc</param>
-        /// <param name="odbiorca">string, login odbiorcy</param>
-        /// <param name="nadawca">string, login nadawcy</param>
-        public static void sendMessage(string msg, string odbiorca, string nadawca)
-        {
-            string cmd = "insert into sinorozmowy (msg, odiorca, nadawca, czas) values (:msg, :odbiorca, :nadawca, sysdate)";
 
             try
             {
                 OracleConnection con = getConnect();
                 OracleCommand command = new OracleCommand(cmd, con);
                 command.Parameters.Add("login", login);
-
-                command.Parameters.Add(new OracleParameter("msg", msg));
-                command.Parameters.Add(new OracleParameter("odbiorca", odbiorca));
-                command.Parameters.Add(new OracleParameter("nadawca", nadawca));
-
-                con.Open();
-                command.ExecuteNonQuery();
-
-                con.Close();
-                con.Dispose();
-
-            }
-            catch (Exception e)
-            { Console.WriteLine("Blad, " + e); }
-        }
-
-        public static string getMessage(string odbiorca, string nadawca)
-        {
-            string cmd = "Select msg from sinorozmowy where nadawca = :nadawca and odbiorca = :odbiorca";
-            string msg = "";
-            try
-            {
-                OracleConnection con = getConnect();
-                OracleCommand command = new OracleCommand(cmd, con);
-                
-                command.Parameters.Add(new OracleParameter("nadawca", nadawca));
-                command.Parameters.Add(new OracleParameter("odbiorca", odbiorca));
 
                 con.Open();
                 using (DbDataReader reader = command.ExecuteReader())
@@ -257,20 +219,70 @@ namespace Komunikator
             catch(Exception e) { Console.WriteLine("Blad, " + e); }
 
             return ret;
-                        while(reader.Read())
-                        {
-                            int msgIndex = reader.GetOrdinal("msg");
-                            msg += reader.GetString(msgIndex);
-                        }
-                    }
-                }
-                con.Close();
-                con.Dispose();
-            }
-            catch (Exception e) { Console.WriteLine("Blad, " + e); }
-
-            return msg;
         }
+
+
+        /// <summary>
+         /// Funckja wysylajaca wiadomosc
+         /// </summary>
+         /// <param name="msg">string, wiadomosc</param>
+         /// <param name="odbiorca">string, login odbiorcy</param>
+         /// <param name="nadawca">string, login nadawcy</param>
+         public static void sendMessage(string msg, string odbiorca, string nadawca)
+         {
+             string cmd = "insert into sinorozmowy (msg, odiorca, nadawca, czas) values (:msg, :odbiorca, :nadawca, sysdate)";
+ 
+             try
+             {
+                 OracleConnection con = getConnect();
+                 OracleCommand command = new OracleCommand(cmd, con);
+ 
+                 command.Parameters.Add(new OracleParameter("msg", msg));
+                 command.Parameters.Add(new OracleParameter("odbiorca", odbiorca));
+                command.Parameters.Add(new OracleParameter("nadawca", nadawca));
+ 
+                 con.Open();
+                 command.ExecuteNonQuery();
+ 
+                 con.Close();
+                 con.Dispose();
+ 
+             }
+             catch (Exception e)
+             { Console.WriteLine("Blad, " + e); }
+         }
+ 
+         public static string getMessage(string odbiorca, string nadawca)
+         {
+             string cmd = "Select msg from sinorozmowy where nadawca = :nadawca and odbiorca = :odbiorca";
+             string msg = "";
+             try
+             {
+                 OracleConnection con = getConnect();
+                 OracleCommand command = new OracleCommand(cmd, con);
+                 
+                 command.Parameters.Add(new OracleParameter("nadawca", nadawca));
+                 command.Parameters.Add(new OracleParameter("odbiorca", odbiorca));
+ 
+                 con.Open();
+                 using (DbDataReader reader = command.ExecuteReader())
+                 {
+                     if (reader.HasRows)
+                     {
+                         while(reader.Read())
+                         {
+                             int msgIndex = reader.GetOrdinal("msg");
+                             msg += reader.GetString(msgIndex);
+                         }
+                     }
+                 }
+                 con.Close();
+                 con.Dispose();
+             }
+             catch (Exception e) { Console.WriteLine("Blad, " + e); }
+ 
+             return msg;
+         }
 
 
         public static void doInsert(string cmd, OracleConnection con)
