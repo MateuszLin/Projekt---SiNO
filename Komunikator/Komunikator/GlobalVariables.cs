@@ -15,5 +15,13 @@ namespace Komunikator
             get { return _loginCounter; }
             set { _loginCounter = value; }
         }
+
+        private static string _login = "";
+
+        public static string login
+        {
+            get { return _login; }
+            set { _login = value; }
+        }
     }
 }
