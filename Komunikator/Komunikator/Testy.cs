@@ -25,7 +25,6 @@ namespace Komunikator
                 con.Open();
                 //Console.WriteLine("Polaczono");
                 return true;
-
             }
             catch (Exception)
             {
@@ -36,11 +35,9 @@ namespace Komunikator
         }
         static void Test_DB_select()
         {
-          
             OracleConnection con = DataBase.getConnect();
             con.Open();
-
-           string cmd = "Select Nrprac, imie, nazwisko from pracownik where nrprac = 2";
+            string cmd = "Select Nrprac, imie, nazwisko from pracownik where nrprac = 2";
            
             DataBase.querySelect(cmd, con);
             con.Close();
