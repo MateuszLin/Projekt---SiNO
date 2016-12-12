@@ -41,8 +41,9 @@ namespace Komunikator
             return oraConn;
         }
 
-
+        
         public static void querySelect(string cmd, OracleConnection con)
+            
         {
             
             OracleCommand comand = new OracleCommand();
@@ -123,7 +124,7 @@ namespace Komunikator
                 OracleConnection con = getConnect();
                 OracleCommand command = new OracleCommand(cmd, con);
                     
-                command.Parameters.Add(new OracleParameter(upThing, update));
+                command.Parameters.Add(new OracleParameter("penis", update));
                 command.Parameters.Add(new OracleParameter("login", login));
 
                 con.Open();
