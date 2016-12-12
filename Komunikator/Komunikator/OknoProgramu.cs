@@ -18,6 +18,11 @@ namespace Komunikator
             InitializeComponent();
         }
 
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
+
         private void rozmowaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OknoRozmowy oknoRozmowy = new OknoRozmowy();
@@ -27,7 +32,8 @@ namespace Komunikator
 
         private void wylogujToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Close();
+            //this.Close();
+            this.Hide();
             OknoLogowania oknoLogowania = new OknoLogowania();
             oknoLogowania.Show();
         }
