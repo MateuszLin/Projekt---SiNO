@@ -16,6 +16,7 @@ namespace Komunikator
         public OknoProgramu()
         {
             InitializeComponent();
+            loadContacts();
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -60,5 +61,29 @@ namespace Komunikator
             Application.Exit();
         }
         */
+
+        private void loadContacts()
+        {
+            List<string> testList = new List<string>(new string[] { "Admin", "Mateusz", "Michał", "Bogdan", "Łukasz" });
+            foreach (string name in testList)
+            {
+                listContact.Items.Add(name);
+            }
+            //Dodanie obsługi listContact_MouseDoubleClick
+            listContact.MouseDoubleClick += new MouseEventHandler(listContact_MouseDoubleClick);
+
+        }
+
+        /// <summary>
+        /// Funkcja która opisuje co się dzieje gdy dwukrotnie naciskamy na obiekt na liście kontaktów.
+        /// </summary>
+        private void listContact_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            int index = this.listContact.IndexFromPoint(e.Location);
+            if (index != System.Windows.Forms.ListBox.NoMatches)
+            {
+                MessageBox.Show("Tu otworzy się rozmowa", "Rozmowa");
+            }
+        }
     }
 }
