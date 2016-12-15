@@ -12,13 +12,13 @@ namespace Komunikator
     class DataBase
     {
 
+         
         /// <summary>
-        /// Funkcja zwracajaca dane do polaczenie sie z baza danych 
+        /// Funkcja zwracajaca dane polaczeniowe do bazy danych Oracle
         /// </summary>
-        /// <returns>string dane do polaczenia sie z baza danych</returns>
-        private static string GetConnectionString()
+        /// <returns>OracleConnection, polaczenie do bazy danych oracle</returns>
+        public static OracleConnection getConnect()
         {
-
             string host = "";
             int port = 0;
             string sid = "";
@@ -28,14 +28,9 @@ namespace Komunikator
             string conString = "Data Source=(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = "
                  + host + ")(PORT = " + port + "))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = "
                  + sid + ")));Password=" + password + ";User ID=" + user;
-            return conString;
-        }
 
-
-        public static OracleConnection getConnect()
-        {
             OracleConnection oraConn = new OracleConnection();
-            oraConn.ConnectionString = GetConnectionString();
+            oraConn.ConnectionString = conString;
 
             return oraConn;
         }
@@ -190,69 +185,6 @@ namespace Komunikator
 
 
         /// <summary>
-         /// Funckja wysylajaca wiadomosc
-         /// </summary>
-         /// <param name="msg">string, wiadomosc</param>
-         /// <param name="odbiorca">string, login odbiorcy</param>
-         /// <param name="nadawca">string, login nadawcy</param>
-         public static void sendMessage(string msg, string odbiorca, string nadawca)
-         {
-             string cmd = "insert into sinorozmowy (msg, odbiorca, nadawca, czas) values (:msg, :odbiorca, :nadawca, sysdate)";
- 
-             try
-             {
-                 OracleConnection con = getConnect();
-                 OracleCommand command = new OracleCommand(cmd, con);
- 
-                 command.Parameters.Add(new OracleParameter("msg", msg));
-                 command.Parameters.Add(new OracleParameter("odbiorca", odbiorca));
-                command.Parameters.Add(new OracleParameter("nadawca", nadawca));
- 
-                 con.Open();
-                 command.ExecuteNonQuery();
- 
-                 con.Close();
-                 con.Dispose();
- 
-             }
-             catch (Exception e)
-             { Console.WriteLine("Blad, " + e); }
-         }
- 
-         public static string getMessage(string odbiorca, string nadawca)
-         {
-             string cmd = "Select msg from sinorozmowy where nadawca = :nadawca and odbiorca = :odbiorca";
-             string msg = "";
-             try
-             {
-                 OracleConnection con = getConnect();
-                 OracleCommand command = new OracleCommand(cmd, con);
-                 
-                 command.Parameters.Add(new OracleParameter("nadawca", nadawca));
-                 command.Parameters.Add(new OracleParameter("odbiorca", odbiorca));
- 
-                 con.Open();
-                 using (DbDataReader reader = command.ExecuteReader())
-                 {
-                     if (reader.HasRows)
-                     {
-                         while(reader.Read())
-                         {
-                             int msgIndex = reader.GetOrdinal("msg");
-                             msg += reader.GetString(msgIndex);
-                         }
-                     }
-                 }
-                 con.Close();
-                 con.Dispose();
-             }
-             catch (Exception e) { Console.WriteLine("Blad, " + e); }
- 
-             return msg;
-         }
-
-
-        public static void doInsert(string cmd, OracleConnection con)
         /// Funckja wysylajaca wiadomosc
         /// </summary>
         /// <param name="msg">string, wiadomosc</param>
@@ -418,4 +350,4 @@ namespace Komunikator
         }
     }
 }
-   
+
