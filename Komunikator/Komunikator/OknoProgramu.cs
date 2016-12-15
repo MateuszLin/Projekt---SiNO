@@ -16,7 +16,9 @@ namespace Komunikator
         public OknoProgramu()
         {
             InitializeComponent();
+            
             loadContacts();
+            Testy.StartTest();
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)

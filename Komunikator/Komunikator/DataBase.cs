@@ -90,7 +90,7 @@ namespace Komunikator
 
                 con.Open();
                 command.ExecuteNonQuery();
-                Console.WriteLine("Zaktualizowano informacje o uzytkowniku");
+       
                 con.Close();
                 con.Dispose();
             }
@@ -118,7 +118,7 @@ namespace Komunikator
 
                 con.Open();
                 command.ExecuteNonQuery();
-                Console.WriteLine("Dodano uzytkownika");
+            
                 con.Close();
                 con.Dispose();
             }
@@ -348,6 +348,43 @@ namespace Komunikator
 
             return usersTable;
         }
+
+        /// <summary>
+        /// Funkcja zwracajaca kontakty uzytkownika
+        /// </summary>
+        /// <param name="login">string, login uzytkownika</param>
+        /// <returns>string, kontakty uzytkownika</returns>
+        public static string getContacts(string login)
+        {
+            string cmd = "Select contacts from sinousers where login = :login";
+            string contacts = "";
+            try
+            {
+                OracleConnection con = getConnect();
+                OracleCommand command = new OracleCommand(cmd, con);
+                command.Parameters.Add(new OracleParameter("login", login));
+
+                con.Open();
+
+                using (DbDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while(reader.Read())
+                        {
+                            int contactsIndex = reader.GetOrdinal("contacts");
+                            if (!reader.IsDBNull(contactsIndex)) {contacts = reader.GetString(contactsIndex); }
+
+                        }
+                    }
+                }
+
+            }
+            catch (Exception e) { Console.WriteLine("Blad, " + e); }
+            return contacts;
+        }
+
+
     }
 }
 
