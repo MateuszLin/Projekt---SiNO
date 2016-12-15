@@ -86,18 +86,7 @@ namespace Komunikator
                 }
                 userView.Items.Add(lvi);
             }
-            
-            /*
-            foreach(List<string> x in usersTable)
-            {
-                ListViewItem lvi = new ListViewItem();
-                foreach(string j in x)
-                {
-                    lvi.SubItems.Add(j);
-                }
-                userView.Items.Add(lvi);
-            }
-            */
+
 
         }
 
