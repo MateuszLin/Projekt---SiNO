@@ -17,19 +17,17 @@ namespace Komunikator
         {
             InitializeComponent();
             loadContacts();
+            //---------------ROZPOCZECIE TESTÓW-----------------
+            Testy.StartTest();
         }
 
+
+        // Poniższa metoda nie działa poprawnie ponieważ w metodzie wyloguj używamy this.Close() 
+        // Więc po nadpisaniu metody Close() opcja wyloguj kończy aplikację.
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             Application.Exit();
         }
-
-        /*private void rozmowaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            OknoRozmowy oknoRozmowy = new OknoRozmowy(listContact.GetItemText(listContact.SelectedItem));
-            //new Thread(() => new OknoRozmowy().Show()).Start();
-            oknoRozmowy.Show();
-        }*/
 
         private void wylogujToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -49,18 +47,6 @@ namespace Komunikator
             MessageBox.Show(@"Komuikator internetowy działąjący za pomocą bazy danych.
                             Tworzony przez Michała i Mateusza", "O programie");
         }
-
-        // Poniższa metoda nie działa ponieważ w metodzie wyloguj używamy this.Close() 
-        // Więc po nadpisaniu metody Close() opcja wyloguj kończy aplikację.
-        /*
-        /// <summary>
-        /// Metoda nadpisuje przycisk okna X aby on nie zamykał formatki lecz cały program.
-        /// </summary>
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            Application.Exit();
-        }
-        */
 
         private void loadContacts()
         {

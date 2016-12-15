@@ -16,8 +16,9 @@ namespace Komunikator
             set { _loginCounter = value; }
         }
 
-        private static string _login = "";
 
+        //Właściwośc przechowująca login zalogowanego użytkownika
+        private static string _login = "";
         public static string login
         {
             get { return _login; }

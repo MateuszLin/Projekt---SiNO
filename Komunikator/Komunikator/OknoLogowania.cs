@@ -16,20 +16,16 @@ namespace Komunikator
         {
             InitializeComponent();
             //Wartości wpisane tymczasow - żeby nie trzeba było wpisywać ręcznie.
-            //W dalszej wersji projektu dane będą przetrzymywane w DB
             LoginBox.Text = "admin";
             PasswordBox.Text = "admin";
         }
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
-            //if (LoginBox.Text == "admin" && PasswordBox.Text == "admin")
             if (PasswordBox.Text == DataBase.getPassword(LoginBox.Text))
             {
                 this.Hide();
                 GlobalVariables.login = LoginBox.Text;
-                //OknoRozmowy oknoRozmowy = new OknoRozmowy();
-                //oknoRozmowy.Show();
                 OknoProgramu oknoProgramu = new OknoProgramu();
                 oknoProgramu.Show();
             }

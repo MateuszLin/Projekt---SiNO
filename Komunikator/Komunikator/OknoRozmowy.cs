@@ -16,10 +16,7 @@ namespace Komunikator
         public OknoRozmowy(string loginRozmowcy2)
         {
             loginRozmowcy = loginRozmowcy2;
-            InitializeComponent();
-            // ROZPOCZECIE TESTÓW
-            Testy.StartTest();
-            
+            InitializeComponent();     
         }
 
         private void buttonWyslij_Click(object sender, EventArgs e)
@@ -29,6 +26,8 @@ namespace Komunikator
             if(textBox1.Text != "")
             {
                 DataBase.sendMessage(textBox1.Text, loginRozmowcy, GlobalVariables.login);
+                textBox2.Text += textBox1.Text + "\r\n";
+                textBox1.Clear();
             }
 
         }
@@ -37,7 +36,7 @@ namespace Komunikator
         {
             Console.WriteLine("Naciśnięto Odbierz");
             //textBox2.Text += "Odebrano i wyświetlono w oknie\n";
-            textBox2.Text += DataBase.getMessage(GlobalVariables.login, loginRozmowcy);
+            textBox2.Text += "\r\n" + DataBase.getMessage(GlobalVariables.login, loginRozmowcy);
         }
 
         private void buttonExit_Click(object sender, EventArgs e)
