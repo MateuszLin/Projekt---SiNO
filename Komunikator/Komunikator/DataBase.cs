@@ -11,7 +11,6 @@ namespace Komunikator
 {
     class DataBase
     {
-        
 
         /// <summary>
         /// Funkcja zwracajaca dane do polaczenie sie z baza danych 
@@ -39,38 +38,6 @@ namespace Komunikator
             oraConn.ConnectionString = GetConnectionString();
 
             return oraConn;
-        }
-
-
-        public static void querySelect(string cmd, OracleConnection con)
-        {
-            
-            OracleCommand comand = new OracleCommand();
-            comand.CommandText = cmd;
-            comand.Connection = con;
-            
-            using (DbDataReader reader = comand.ExecuteReader())
-            {
-                if(reader.HasRows)
-                {
-                    while(reader.Read())
-                    {
-                        int nrprac = reader.GetOrdinal("NRPRAC");
-
-                        long idprac = Convert.ToInt64(reader.GetValue(0));
-
-                        int imieIndex = reader.GetOrdinal("IMIE");
-                        string imie = reader.GetString(1);
-
-                        int nazwiIndex = reader.GetOrdinal("NAZWISKO");
-                        string nazwi = reader.GetString(nazwiIndex);
-
-                        Console.WriteLine("Nrprac, "+ idprac);
-                        Console.WriteLine("Imie, "+ imie);
-                        Console.WriteLine("Nazwisko, "+ nazwi);
-                    }
-                }
-            }
         }
 
 
@@ -102,9 +69,9 @@ namespace Komunikator
                     }
                 }
             }
-            catch(Exception e) { Console.WriteLine("Blad, " + e); }
+            catch (Exception e) { Console.WriteLine("Blad, " + e); }
 
-                return pass;
+            return pass;
         }
 
 
@@ -112,17 +79,17 @@ namespace Komunikator
         /// Funkcja aktualizujaca informacje o uzytkownikach
         /// </summary>
         /// <param name="login"> string, login uzytkownika</param>
-        /// <param name="upThing">string, co chcemy zaktualizowac (imie, nazwisko, miejscowosc, email, nrtelefonu)</param>
+        /// <param name="upThing">string, co chcemy zaktualizowac (imie, nazwisko, miasto, email, nrtelefonu)</param>
         /// <param name="update"> string, wartosc na jaka chcemy zaktualizowac</param>
-        public static void updateProfile(string login, string upThing, string update)  
+        public static void updateProfile(string login, string upThing, string update)
         {
-            string cmd = "Update sinoUsers Set " + upThing + " = :" +  upThing + " where login = :login";
+            string cmd = "Update sinoUsers Set " + upThing + " = :" + upThing + " where login = :login";
 
             try
             {
                 OracleConnection con = getConnect();
                 OracleCommand command = new OracleCommand(cmd, con);
-                    
+
                 command.Parameters.Add(new OracleParameter(upThing, update));
                 command.Parameters.Add(new OracleParameter("login", login));
 
@@ -133,7 +100,7 @@ namespace Komunikator
                 con.Dispose();
             }
             catch (Exception e) { Console.WriteLine("Blad, " + e); }
-            
+
         }
 
 
@@ -160,8 +127,8 @@ namespace Komunikator
                 con.Close();
                 con.Dispose();
             }
-            catch(Exception e) { Console.WriteLine("Blad, " + e); }
-            
+            catch (Exception e) { Console.WriteLine("Blad, " + e); }
+
         }
 
 
@@ -172,7 +139,7 @@ namespace Komunikator
         /// <returns></returns>
         public static string[] getUserInfo(string login)
         {
-            string cmd = "Select login, imie, nazwisko, miejscowosc, email, nrtelefonu from sinousers where login = :login";
+            string cmd = "Select login, imie, nazwisko, miasto, email, nrtelefonu from sinousers where login = :login";
             string[] ret = new string[6];
 
             try
@@ -193,7 +160,7 @@ namespace Komunikator
                                 reader.GetOrdinal("login"),
                                 reader.GetOrdinal("imie"),
                                 reader.GetOrdinal("nazwisko"),
-                                reader.GetOrdinal("miejscowosc"),
+                                reader.GetOrdinal("miasto"),
                                 reader.GetOrdinal("email"),
                                 reader.GetOrdinal("nrtelefonu")
                                 };
@@ -209,14 +176,14 @@ namespace Komunikator
                                     ret[x] = reader.GetString(index[x]);
                                 }
                             }
-                        
+
                         }
                         con.Close();
                         con.Dispose();
                     }
                 }
             }
-            catch(Exception e) { Console.WriteLine("Blad, " + e); }
+            catch (Exception e) { Console.WriteLine("Blad, " + e); }
 
             return ret;
         }
@@ -286,43 +253,169 @@ namespace Komunikator
 
 
         public static void doInsert(string cmd, OracleConnection con)
+        /// Funckja wysylajaca wiadomosc
+        /// </summary>
+        /// <param name="msg">string, wiadomosc</param>
+        /// <param name="odbiorca">string, login odbiorcy</param>
+        /// <param name="nadawca">string, login nadawcy</param>
+        public static void sendMessage(string msg, string odbiorca, string nadawca)
         {
-            //"Insert into pracownik (nrprac, imie, nazwisko) values (:nrprac, :imie, :nazwisko)"
-
-            OracleCommand command = new OracleCommand(cmd, con);
+            string cmd = "insert into sinorozmowy (msg, odiorca, nadawca, czas) values (:msg, :odbiorca, :nadawca, sysdate)";
 
             try
             {
-                command.Parameters.Add(new OracleParameter("nrprac", 999));
-                command.Parameters.Add(new OracleParameter("imie", "Rysiek"));
-                command.Parameters.Add(new OracleParameter("nazwisko", "zKlanu"));
+                OracleConnection con = getConnect();
+                OracleCommand command = new OracleCommand(cmd, con);
 
-                int rowCount = command.ExecuteNonQuery();
-                Console.WriteLine("Dodano wierszy: " + rowCount);
+                command.Parameters.Add(new OracleParameter("msg", msg));
+                command.Parameters.Add(new OracleParameter("odbiorca", odbiorca));
+                command.Parameters.Add(new OracleParameter("nadawca", nadawca));
+
+                con.Open();
+                command.ExecuteNonQuery();
+
+                con.Close();
+                con.Dispose();
+
             }
-            catch(Exception e)
-            {
-                Console.WriteLine("Blad " + e);
-                
-            }
+            catch (Exception e)
+            { Console.WriteLine("Blad, " + e); }
         }
 
-        public static void doUpdate(string cmd, OracleConnection con)
-        {
-            OracleCommand command = new OracleCommand(cmd, con);
 
-            //"UPDATE pracownik set email = :email where nrprac = :nrprac"
+        /// <summary>
+        /// Funckja odbierajaca wiadomosci z bazy danych.
+        /// </summary>
+        /// <param name="odbiorca">string, login odbiorcy</param>
+        /// <param name="nadawca">string, login nadawcy</param>
+        /// <returns>string, wiadomosc dla obiorcy</returns>
+        public static string getMessage(string odbiorca, string nadawca)
+        {
+            string cmd = "Select msg from sinorozmowy where nadawca = :nadawca and odbiorca = :odbiorca order by CZAS";
+            string msg = "";
             try
             {
-                command.Parameters.Add(new OracleParameter("email", "test@mail"));
-                command.Parameters.Add(new OracleParameter("nrprac", 41));
+                OracleConnection con = getConnect();
+                OracleCommand command = new OracleCommand(cmd, con);
 
-                command.ExecuteNonQuery();
+                command.Parameters.Add(new OracleParameter("nadawca", nadawca));
+                command.Parameters.Add(new OracleParameter("odbiorca", odbiorca));
+
+                con.Open();
+                using (DbDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            int msgIndex = reader.GetOrdinal("msg");
+                            msg += reader.GetString(msgIndex);
+                        }
+                    }
+                }
+                con.Close();
+                con.Dispose();
             }
-            catch(Exception e)
+            catch (Exception e) { Console.WriteLine("Blad, " + e); }
+
+            return msg;
+        }
+        /// <summary>
+        /// Funkcja sprawdzajaca czy uzytkownik o podanym loginie jest online
+        /// </summary>
+        /// <param name="login">string, login uzytkownika</param>
+        /// <returns></returns>
+        public static Boolean isOnline(string login)
+        {
+            string cmd = "Select status from sinousers where login = :login";
+            Boolean isonline = false;
+            try
             {
-                Console.WriteLine("Blad " + e);
+                OracleConnection con = getConnect();
+                OracleCommand command = new OracleCommand(cmd, con);
+
+                command.Parameters.Add(new OracleParameter("login", login));
+
+                con.Open();
+                using (DbDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            int statusIndex = reader.GetOrdinal("status");
+                            int status = reader.GetInt32(statusIndex);
+
+                            if (status == 1) { isonline = true; }
+
+                        }
+                    }
+                }
             }
+            catch (Exception e) { Console.WriteLine("Blad, " + e); }
+
+            return isonline;
+
+
+        }
+        /// <summary>
+        /// Funkcja wyszukujaca uzytkownikow
+        /// </summary>, 
+        /// <param name="login">string, login uzytownika ktory wyszukuje</param>
+        /// <param name="conditions">string, warunki po where kazdy z AND</param>
+        /// <param name="conditionsTable">string[], tablica z parametrami do warunku</param>
+        /// <returns></returns>
+        public static List<List<string>> searchUsers(string login, string conditions, string[] conditionsTable)
+        {
+            List<List<string>> usersTable = new List<List<string>>();
+            int counter = 0;
+            string cmd = "Select login, imie, nazwisko, miasto, email, nrtelefonu from sinousers" + conditions;
+            try
+            {
+                OracleConnection con = getConnect();
+                OracleCommand command = new OracleCommand(cmd, con);
+
+                for (int i = 0; i < conditionsTable.Length; i++)
+                {
+                    command.Parameters.Add(new OracleParameter("", conditionsTable[i]));
+                }
+
+                con.Open();
+                using (DbDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            int[] index =
+                                    {
+                                reader.GetOrdinal("login"),
+                                reader.GetOrdinal("imie"),
+                                reader.GetOrdinal("nazwisko"),
+                                reader.GetOrdinal("miasto"),
+                                reader.GetOrdinal("email"),
+                                reader.GetOrdinal("nrtelefonu")
+                                };
+                            usersTable.Add(new List<string>());
+                            for (int i = 0; i < index.Length; i++)
+                            {
+                                if (reader.IsDBNull(index[i])) usersTable[counter].Add(" ");
+                                else usersTable[counter].Add(reader.GetString(index[i]));
+
+                            }
+
+                            counter += 1;
+
+                        }
+
+                    }
+                }
+
+            }
+            catch (Exception e) { Console.WriteLine("Blad, " + e); }
+
+            return usersTable;
         }
     }
 }
+   
