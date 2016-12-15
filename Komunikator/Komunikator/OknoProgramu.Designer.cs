@@ -98,6 +98,7 @@
             this.szukajUżytkownikaToolStripMenuItem.Name = "szukajUżytkownikaToolStripMenuItem";
             this.szukajUżytkownikaToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.szukajUżytkownikaToolStripMenuItem.Text = "Szukaj użytkownika";
+            this.szukajUżytkownikaToolStripMenuItem.Click += new System.EventHandler(this.szukajUżytkownikaToolStripMenuItem_Click);
             // 
             // oMnieToolStripMenuItem
             // 
