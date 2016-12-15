@@ -19,11 +19,11 @@ namespace Komunikator
         private static string GetConnectionString()
         {
 
-            string host = "";
-            int port = 0;
-            string sid = "";
-            string user = "";
-            string password = "";
+            string host = "oracle1.pkif.us.edu.pl";
+            int port = 1521;
+            string sid = "umain.pkif.us.edu.pl";
+            string user = "RT_mlindel";
+            string password = "oracle";
 
             string conString = "Data Source=(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = "
                  + host + ")(PORT = " + port + "))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = "
@@ -79,7 +79,7 @@ namespace Komunikator
         /// Funkcja aktualizujaca informacje o uzytkownikach
         /// </summary>
         /// <param name="login"> string, login uzytkownika</param>
-        /// <param name="upThing">string, co chcemy zaktualizowac (imie, nazwisko, miejscowosc, email, nrtelefonu)</param>
+        /// <param name="upThing">string, co chcemy zaktualizowac (imie, nazwisko, miasto, email, nrtelefonu)</param>
         /// <param name="update"> string, wartosc na jaka chcemy zaktualizowac</param>
         public static void updateProfile(string login, string upThing, string update)  
         {
@@ -139,7 +139,7 @@ namespace Komunikator
         /// <returns></returns>
         public static string[] getUserInfo(string login)
         {
-            string cmd = "Select login, imie, nazwisko, miejscowosc, email, nrtelefonu from sinousers where login = :login";
+            string cmd = "Select login, imie, nazwisko, miasto, email, nrtelefonu from sinousers where login = :login";
             string[] ret = new string[6];
 
             try
@@ -160,7 +160,7 @@ namespace Komunikator
                                 reader.GetOrdinal("login"),
                                 reader.GetOrdinal("imie"),
                                 reader.GetOrdinal("nazwisko"),
-                                reader.GetOrdinal("miejscowosc"),
+                                reader.GetOrdinal("miasto"),
                                 reader.GetOrdinal("email"),
                                 reader.GetOrdinal("nrtelefonu")
                                 };
@@ -228,7 +228,7 @@ namespace Komunikator
          /// <returns>string, wiadomosc dla obiorcy</returns>
          public static string getMessage(string odbiorca, string nadawca)
          {
-             string cmd = "Select msg from sinorozmowy where nadawca = :nadawca and odbiorca = :odbiorca";
+             string cmd = "Select msg from sinorozmowy where nadawca = :nadawca and odbiorca = :odbiorca order by CZAS";
              string msg = "";
              try
              {
@@ -294,6 +294,64 @@ namespace Komunikator
             return isonline;
             
                 
+        }
+        /// <summary>
+        /// Funkcja wyszukujaca uzytkownikow
+        /// </summary>, 
+        /// <param name="login">string, login uzytownika ktory wyszukuje</param>
+        /// <param name="conditions">string, warunki po where kazdy z AND</param>
+        /// <param name="conditionsTable">string[], tablica z parametrami do warunku</param>
+        /// <returns></returns>
+        public static List<List<string>> searchUsers(string login, string conditions, string[] conditionsTable)
+        {
+            List<List<string>> usersTable = new List<List<string>>();
+            int counter = 0;
+            string cmd = "Select login, imie, nazwisko, miasto, email, nrtelefonu from sinousers" + conditions;
+            try
+            {
+                OracleConnection con = getConnect();
+                OracleCommand command = new OracleCommand(cmd, con);
+
+                for (int i = 0; i < conditionsTable.Length; i++)
+                {
+                    command.Parameters.Add(new OracleParameter("", conditionsTable[i]));
+                }
+
+                con.Open();
+                using (DbDataReader reader = command.ExecuteReader())
+                {
+                    if(reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            int[] index =
+                                    {
+                                reader.GetOrdinal("login"),
+                                reader.GetOrdinal("imie"),
+                                reader.GetOrdinal("nazwisko"),
+                                reader.GetOrdinal("miasto"),
+                                reader.GetOrdinal("email"),
+                                reader.GetOrdinal("nrtelefonu")
+                                };
+                            usersTable.Add(new List<string>());
+                            for(int i = 0; i < index.Length; i++)
+                            {
+                                if (reader.IsDBNull(index[i])) usersTable[counter].Add(" ");
+                                else usersTable[counter].Add(reader.GetString(index[i])); 
+                                
+                            }
+
+                            counter += 1;
+
+                        }
+
+                    }
+                }
+
+            }
+            catch(Exception e) { Console.WriteLine("Blad, " + e); }
+
+            return usersTable;
         }
 
 

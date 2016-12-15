@@ -71,6 +71,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OknoSzukajKontaktu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OknoSzukajKontaktu.Designer.cs">
+      <DependentUpon>OknoSzukajKontaktu.cs</DependentUpon>
+    </Compile>
     <Compile Include="GlobalVariables.cs" />
     <Compile Include="DataBase.cs" />
     <Compile Include="FTP_Communication.cs" />
@@ -96,6 +102,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TCP_Communication.cs" />
     <Compile Include="Testy.cs" />
+    <EmbeddedResource Include="OknoSzukajKontaktu.resx">
+      <DependentUpon>OknoSzukajKontaktu.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="OknoLogowania.resx">
       <DependentUpon>OknoLogowania.cs</DependentUpon>
     </EmbeddedResource>

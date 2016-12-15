@@ -49,6 +49,12 @@ namespace Komunikator
                             Tworzony przez Michała i Mateusza", "O programie");
         }
 
+        private void szukajUżytkownikaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OknoSzukajKontaktu szukaj = new OknoSzukajKontaktu();
+            szukaj.Show();
+        }
+
         // Poniższa metoda nie działa ponieważ w metodzie wyloguj używamy this.Close() 
         // Więc po nadpisaniu metody Close() opcja wyloguj kończy aplikację.
         /*

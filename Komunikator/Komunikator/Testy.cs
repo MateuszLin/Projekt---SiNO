@@ -48,7 +48,6 @@ namespace Komunikator
 
         static void Test_DB_getinfo()
         {
-            //string[] info = DataBase.getUserInfo("Matek");
             foreach (string x in DataBase.getUserInfo("Matek"))
             {
                 Console.WriteLine(x);
@@ -58,8 +57,6 @@ namespace Komunikator
         static void Test_DB_getpass()
         {
             string login = "admin";
-            //DataBase pass = new DataBase();
-            //----------ZMIANA TESTU Z POWODU ZMIANY METODY NA STAYCZNĄ----------
             Console.WriteLine("Odebralem " + DataBase.getPassword(login));
         }
 
@@ -91,9 +88,7 @@ namespace Komunikator
             //Test1_Ftp_Upload();
 
             //Test_DB_connect();
-            //Test_DB_select();
-            //Test_DB_update();
-            // Test_DB_insert();
+
             //Test_DB_getpass();
             //Test_DB_updateProfile();
             //Test_DB_addUser();
