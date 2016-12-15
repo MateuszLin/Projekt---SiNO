@@ -26,7 +26,7 @@ namespace Komunikator
             if(textBox1.Text != "")
             {
                 DataBase.sendMessage(textBox1.Text, loginRozmowcy, GlobalVariables.login);
-                textBox2.Text += textBox1.Text + "\r\n";
+                textBox2.Text += "\r\n" + "[" + GlobalVariables.login + "] " + textBox1.Text;
                 textBox1.Clear();
             }
 
@@ -35,8 +35,7 @@ namespace Komunikator
         private void buttonOdbierz_Click(object sender, EventArgs e)
         {
             Console.WriteLine("Naciśnięto Odbierz");
-            //textBox2.Text += "Odebrano i wyświetlono w oknie\n";
-            textBox2.Text += "\r\n" + DataBase.getMessage(GlobalVariables.login, loginRozmowcy);
+            textBox2.Text += "\r\n" + "[" + loginRozmowcy + "] " + DataBase.getMessage(GlobalVariables.login, loginRozmowcy);
         }
 
         private void buttonExit_Click(object sender, EventArgs e)
