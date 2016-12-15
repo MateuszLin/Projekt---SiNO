@@ -19,11 +19,11 @@ namespace Komunikator
         /// <returns>OracleConnection, polaczenie do bazy danych oracle</returns>
         public static OracleConnection getConnect()
         {
-            string host = "";
-            int port = 0;
-            string sid = "";
-            string user = "";
-            string password = "";
+            string host = "oracle1.pkif.us.edu.pl";
+            int port = 1521;
+            string sid = "umain.pkif.us.edu.pl";
+            string user = "RT_mlindel";
+            string password = "oracle";
 
             string conString = "Data Source=(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = "
                  + host + ")(PORT = " + port + "))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = "
@@ -90,7 +90,7 @@ namespace Komunikator
 
                 con.Open();
                 command.ExecuteNonQuery();
-                Console.WriteLine("Zaktualizowano informacje o uzytkowniku");
+       
                 con.Close();
                 con.Dispose();
             }
@@ -118,7 +118,7 @@ namespace Komunikator
 
                 con.Open();
                 command.ExecuteNonQuery();
-                Console.WriteLine("Dodano uzytkownika");
+            
                 con.Close();
                 con.Dispose();
             }
@@ -348,6 +348,43 @@ namespace Komunikator
 
             return usersTable;
         }
+
+        /// <summary>
+        /// Funkcja zwracajaca kontakty uzytkownika
+        /// </summary>
+        /// <param name="login">string, login uzytkownika</param>
+        /// <returns>string, kontakty uzytkownika</returns>
+        public static string getContacts(string login)
+        {
+            string cmd = "Select contacts from sinousers where login = :login";
+            string contacts = "";
+            try
+            {
+                OracleConnection con = getConnect();
+                OracleCommand command = new OracleCommand(cmd, con);
+                command.Parameters.Add(new OracleParameter("login", login));
+
+                con.Open();
+
+                using (DbDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while(reader.Read())
+                        {
+                            int contactsIndex = reader.GetOrdinal("contacts");
+                            if (!reader.IsDBNull(contactsIndex)) {contacts = reader.GetString(contactsIndex); }
+
+                        }
+                    }
+                }
+
+            }
+            catch (Exception e) { Console.WriteLine("Blad, " + e); }
+            return contacts;
+        }
+
+
     }
 }
 

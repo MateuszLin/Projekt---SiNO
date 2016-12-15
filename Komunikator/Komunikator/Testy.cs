@@ -83,6 +83,11 @@ namespace Komunikator
             Console.WriteLine(DataBase.isOnline("Matek"));
             Console.WriteLine(DataBase.isOnline("Michal"));
         }
+
+        static void Test_DB_getContacts()
+        {
+            Console.WriteLine(DataBase.getContacts("Matek"));
+        }
         public static void StartTest()
         {
             //Test1_Ftp_Upload();
@@ -95,8 +100,9 @@ namespace Komunikator
             // Test_DB_getinfo();
             //Test3_TCP_Server();
             //Test4_Ftp_Read();
-           // Test_DB_odbieranie();
+            // Test_DB_odbieranie();
             //Test_DB_isOnline();
+            //Test_DB_getContacts();
         }
 
     }
