@@ -24,12 +24,12 @@ namespace Komunikator
             Application.Exit();
         }
 
-        private void rozmowaToolStripMenuItem_Click(object sender, EventArgs e)
+        /*private void rozmowaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OknoRozmowy oknoRozmowy = new OknoRozmowy();
+            OknoRozmowy oknoRozmowy = new OknoRozmowy(listContact.GetItemText(listContact.SelectedItem));
             //new Thread(() => new OknoRozmowy().Show()).Start();
             oknoRozmowy.Show();
-        }
+        }*/
 
         private void wylogujToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -64,7 +64,7 @@ namespace Komunikator
 
         private void loadContacts()
         {
-            List<string> testList = new List<string>(new string[] { "Admin", "Mateusz", "Michał", "Bogdan", "Łukasz" });
+            List<string> testList = new List<string>(new string[] { "admin", "Matek", "Michal"});
             foreach (string name in testList)
             {
                 listContact.Items.Add(name);
@@ -82,7 +82,8 @@ namespace Komunikator
             int index = this.listContact.IndexFromPoint(e.Location);
             if (index != System.Windows.Forms.ListBox.NoMatches)
             {
-                MessageBox.Show("Tu otworzy się rozmowa", "Rozmowa");
+                OknoRozmowy oknoRozmowy = new OknoRozmowy(listContact.GetItemText(listContact.SelectedItem));
+                oknoRozmowy.Show();
             }
         }
     }

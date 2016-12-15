@@ -12,8 +12,10 @@ namespace Komunikator
 {
     public partial class OknoRozmowy : Form
     {
-        public OknoRozmowy()
+        string loginRozmowcy;
+        public OknoRozmowy(string loginRozmowcy2)
         {
+            loginRozmowcy = loginRozmowcy2;
             InitializeComponent();
             // ROZPOCZECIE TESTÓW
             Testy.StartTest();
@@ -24,14 +26,18 @@ namespace Komunikator
         {
             Console.WriteLine("Naciśnięto Wyślij");
             Console.WriteLine("Wysłano: " + textBox1.Text);
-            //-----------TYMCZASOWO PARAMETR ODBIORCA PRZYPISANY NA STAŁE!!!--------------
-            DataBase.sendMessage(textBox1.Text, "Matek", GlobalVariables.login);
+            if(textBox1.Text != "")
+            {
+                DataBase.sendMessage(textBox1.Text, loginRozmowcy, GlobalVariables.login);
+            }
+
         }
 
         private void buttonOdbierz_Click(object sender, EventArgs e)
         {
             Console.WriteLine("Naciśnięto Odbierz");
-            textBox2.Text += "Odebrano i wyświetlono w oknie\n";
+            //textBox2.Text += "Odebrano i wyświetlono w oknie\n";
+            textBox2.Text += DataBase.getMessage(GlobalVariables.login, loginRozmowcy);
         }
 
         private void buttonExit_Click(object sender, EventArgs e)
