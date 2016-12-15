@@ -11,7 +11,7 @@ namespace Komunikator
 {
     class DataBase
     {
-        
+
         /// <summary>
         /// Funkcja zwracajaca dane do polaczenie sie z baza danych 
         /// </summary>
@@ -69,9 +69,9 @@ namespace Komunikator
                     }
                 }
             }
-            catch(Exception e) { Console.WriteLine("Blad, " + e); }
+            catch (Exception e) { Console.WriteLine("Blad, " + e); }
 
-                return pass;
+            return pass;
         }
 
 
@@ -81,15 +81,15 @@ namespace Komunikator
         /// <param name="login"> string, login uzytkownika</param>
         /// <param name="upThing">string, co chcemy zaktualizowac (imie, nazwisko, miasto, email, nrtelefonu)</param>
         /// <param name="update"> string, wartosc na jaka chcemy zaktualizowac</param>
-        public static void updateProfile(string login, string upThing, string update)  
+        public static void updateProfile(string login, string upThing, string update)
         {
-            string cmd = "Update sinoUsers Set " + upThing + " = :" +  upThing + " where login = :login";
+            string cmd = "Update sinoUsers Set " + upThing + " = :" + upThing + " where login = :login";
 
             try
             {
                 OracleConnection con = getConnect();
                 OracleCommand command = new OracleCommand(cmd, con);
-                    
+
                 command.Parameters.Add(new OracleParameter(upThing, update));
                 command.Parameters.Add(new OracleParameter("login", login));
 
@@ -100,7 +100,7 @@ namespace Komunikator
                 con.Dispose();
             }
             catch (Exception e) { Console.WriteLine("Blad, " + e); }
-            
+
         }
 
 
@@ -127,8 +127,8 @@ namespace Komunikator
                 con.Close();
                 con.Dispose();
             }
-            catch(Exception e) { Console.WriteLine("Blad, " + e); }
-            
+            catch (Exception e) { Console.WriteLine("Blad, " + e); }
+
         }
 
 
@@ -176,87 +176,87 @@ namespace Komunikator
                                     ret[x] = reader.GetString(index[x]);
                                 }
                             }
-                        
+
                         }
                         con.Close();
                         con.Dispose();
                     }
                 }
             }
-            catch(Exception e) { Console.WriteLine("Blad, " + e); }
+            catch (Exception e) { Console.WriteLine("Blad, " + e); }
 
             return ret;
         }
 
 
-         /// <summary>
-         /// Funckja wysylajaca wiadomosc
-         /// </summary>
-         /// <param name="msg">string, wiadomosc</param>
-         /// <param name="odbiorca">string, login odbiorcy</param>
-         /// <param name="nadawca">string, login nadawcy</param>
-         public static void sendMessage(string msg, string odbiorca, string nadawca)
-         {
-             string cmd = "insert into sinorozmowy (msg, odiorca, nadawca, czas) values (:msg, :odbiorca, :nadawca, sysdate)";
- 
-             try
-             {
-                 OracleConnection con = getConnect();
-                 OracleCommand command = new OracleCommand(cmd, con);
- 
-                 command.Parameters.Add(new OracleParameter("msg", msg));
-                 command.Parameters.Add(new OracleParameter("odbiorca", odbiorca));
-                 command.Parameters.Add(new OracleParameter("nadawca", nadawca));
- 
-                 con.Open();
-                 command.ExecuteNonQuery();
- 
-                 con.Close();
-                 con.Dispose();
- 
-             }
-             catch (Exception e)
-             { Console.WriteLine("Blad, " + e); }
-         }
- 
+        /// <summary>
+        /// Funckja wysylajaca wiadomosc
+        /// </summary>
+        /// <param name="msg">string, wiadomosc</param>
+        /// <param name="odbiorca">string, login odbiorcy</param>
+        /// <param name="nadawca">string, login nadawcy</param>
+        public static void sendMessage(string msg, string odbiorca, string nadawca)
+        {
+            string cmd = "insert into sinorozmowy (msg, odiorca, nadawca, czas) values (:msg, :odbiorca, :nadawca, sysdate)";
 
-         /// <summary>
-         /// Funckja odbierajaca wiadomosci z bazy danych.
-         /// </summary>
-         /// <param name="odbiorca">string, login odbiorcy</param>
-         /// <param name="nadawca">string, login nadawcy</param>
-         /// <returns>string, wiadomosc dla obiorcy</returns>
-         public static string getMessage(string odbiorca, string nadawca)
-         {
-             string cmd = "Select msg from sinorozmowy where nadawca = :nadawca and odbiorca = :odbiorca order by CZAS";
-             string msg = "";
-             try
-             {
-                 OracleConnection con = getConnect();
-                 OracleCommand command = new OracleCommand(cmd, con);
-                 
-                 command.Parameters.Add(new OracleParameter("nadawca", nadawca));
-                 command.Parameters.Add(new OracleParameter("odbiorca", odbiorca));
- 
-                 con.Open();
-                 using (DbDataReader reader = command.ExecuteReader())
-                 {
-                     if (reader.HasRows)
-                     {
-                         while(reader.Read())
-                         {
-                             int msgIndex = reader.GetOrdinal("msg");
-                             msg += reader.GetString(msgIndex);
-                         }
-                     }
-                 }
-                 con.Close();
-                 con.Dispose();
-             }
-             catch (Exception e) { Console.WriteLine("Blad, " + e); }
- 
-             return msg;
-         }
+            try
+            {
+                OracleConnection con = getConnect();
+                OracleCommand command = new OracleCommand(cmd, con);
+
+                command.Parameters.Add(new OracleParameter("msg", msg));
+                command.Parameters.Add(new OracleParameter("odbiorca", odbiorca));
+                command.Parameters.Add(new OracleParameter("nadawca", nadawca));
+
+                con.Open();
+                command.ExecuteNonQuery();
+
+                con.Close();
+                con.Dispose();
+
+            }
+            catch (Exception e)
+            { Console.WriteLine("Blad, " + e); }
+        }
+
+
+        /// <summary>
+        /// Funckja odbierajaca wiadomosci z bazy danych.
+        /// </summary>
+        /// <param name="odbiorca">string, login odbiorcy</param>
+        /// <param name="nadawca">string, login nadawcy</param>
+        /// <returns>string, wiadomosc dla obiorcy</returns>
+        public static string getMessage(string odbiorca, string nadawca)
+        {
+            string cmd = "Select msg from sinorozmowy where nadawca = :nadawca and odbiorca = :odbiorca order by CZAS";
+            string msg = "";
+            try
+            {
+                OracleConnection con = getConnect();
+                OracleCommand command = new OracleCommand(cmd, con);
+
+                command.Parameters.Add(new OracleParameter("nadawca", nadawca));
+                command.Parameters.Add(new OracleParameter("odbiorca", odbiorca));
+
+                con.Open();
+                using (DbDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            int msgIndex = reader.GetOrdinal("msg");
+                            msg += reader.GetString(msgIndex);
+                        }
+                    }
+                }
+                con.Close();
+                con.Dispose();
+            }
+            catch (Exception e) { Console.WriteLine("Blad, " + e); }
+
+            return msg;
+        }
         /// <summary>
         /// Funkcja sprawdzajaca czy uzytkownik o podanym loginie jest online
         /// </summary>
@@ -289,11 +289,11 @@ namespace Komunikator
                     }
                 }
             }
-            catch(Exception e) { Console.WriteLine("Blad, " + e); }
-           
+            catch (Exception e) { Console.WriteLine("Blad, " + e); }
+
             return isonline;
-            
-                
+
+
         }
         /// <summary>
         /// Funkcja wyszukujaca uzytkownikow
@@ -320,7 +320,7 @@ namespace Komunikator
                 con.Open();
                 using (DbDataReader reader = command.ExecuteReader())
                 {
-                    if(reader.HasRows)
+                    if (reader.HasRows)
                     {
                         while (reader.Read())
                         {
@@ -334,11 +334,11 @@ namespace Komunikator
                                 reader.GetOrdinal("nrtelefonu")
                                 };
                             usersTable.Add(new List<string>());
-                            for(int i = 0; i < index.Length; i++)
+                            for (int i = 0; i < index.Length; i++)
                             {
                                 if (reader.IsDBNull(index[i])) usersTable[counter].Add(" ");
-                                else usersTable[counter].Add(reader.GetString(index[i])); 
-                                
+                                else usersTable[counter].Add(reader.GetString(index[i]));
+
                             }
 
                             counter += 1;
@@ -349,12 +349,10 @@ namespace Komunikator
                 }
 
             }
-            catch(Exception e) { Console.WriteLine("Blad, " + e); }
+            catch (Exception e) { Console.WriteLine("Blad, " + e); }
 
             return usersTable;
-                        }
         }
-
-
     }
 }
+   
