@@ -41,5 +41,11 @@ namespace Komunikator
         {
             Application.Exit();
         }
+
+        private void buttonZarejestruj_Click(object sender, EventArgs e)
+        {
+            OknoRejestracji oknoRejestracji = new OknoRejestracji();
+            oknoRejestracji.ShowDialog();
+        }
     }
 }

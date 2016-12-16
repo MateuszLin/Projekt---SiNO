@@ -34,6 +34,7 @@
             this.buttonExit = new System.Windows.Forms.Button();
             this.LoginBox = new System.Windows.Forms.TextBox();
             this.PasswordBox = new System.Windows.Forms.TextBox();
+            this.buttonZarejestruj = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -93,12 +94,24 @@
             this.PasswordBox.Size = new System.Drawing.Size(175, 20);
             this.PasswordBox.TabIndex = 5;
             // 
+            // buttonZarejestruj
+            // 
+            this.buttonZarejestruj.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.buttonZarejestruj.Location = new System.Drawing.Point(59, 232);
+            this.buttonZarejestruj.Name = "buttonZarejestruj";
+            this.buttonZarejestruj.Size = new System.Drawing.Size(260, 50);
+            this.buttonZarejestruj.TabIndex = 6;
+            this.buttonZarejestruj.Text = "Zarejestruj";
+            this.buttonZarejestruj.UseVisualStyleBackColor = true;
+            this.buttonZarejestruj.Click += new System.EventHandler(this.buttonZarejestruj_Click);
+            // 
             // OknoLogowania
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GrayText;
-            this.ClientSize = new System.Drawing.Size(403, 261);
+            this.ClientSize = new System.Drawing.Size(403, 296);
+            this.Controls.Add(this.buttonZarejestruj);
             this.Controls.Add(this.PasswordBox);
             this.Controls.Add(this.LoginBox);
             this.Controls.Add(this.buttonExit);
@@ -122,5 +135,6 @@
         private System.Windows.Forms.Button buttonExit;
         private System.Windows.Forms.TextBox LoginBox;
         private System.Windows.Forms.TextBox PasswordBox;
+        private System.Windows.Forms.Button buttonZarejestruj;
     }
 }
