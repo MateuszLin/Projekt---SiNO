@@ -427,6 +427,48 @@ namespace Komunikator
             catch(Exception e) { Console.WriteLine("Blad, " + e); return false; }
         }
 
+        /// <summary>
+        /// Metoda sprawdzajaca czy podany login istnieje juz w bazie
+        /// </summary>
+        /// <param name="login">string, login, ktory sprawdzic w bazie</param>
+        /// <returns>true - jezeli istnieje, false - jezeli nie istnieje</returns>
+        public static Boolean isLoginAvaible(string login)
+        {
+            string cmd = "Select count(login) counter from sinousers where login = :login";
+            try
+            {
+                OracleConnection con = getConnect();
+                OracleCommand command = new OracleCommand(cmd, con);
+
+                command.Parameters.Add(new OracleParameter("login", login));
+
+                con.Open();
+                using (DbDataReader reader = command.ExecuteReader())
+                {
+                    if(reader.HasRows)
+                    {
+                        while(reader.Read())
+                        {
+                            int counterIndex = reader.GetOrdinal("counter");
+                            int counter = reader.GetInt32(counterIndex);
+
+                            con.Close();
+                            con.Dispose();
+                            
+                            if (counter >= 1)
+                            {    
+                                return false;
+                            }
+                            return true;
+                        }
+                    }
+                }
+                
+            }
+            catch(Exception e) { Console.WriteLine("Blad, " + e);}
+
+            return true;
+        }
 
     }
 }
