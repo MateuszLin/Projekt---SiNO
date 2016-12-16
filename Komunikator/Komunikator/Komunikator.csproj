@@ -104,6 +104,12 @@
     <Compile Include="OknoRozmowy.Designer.cs">
       <DependentUpon>OknoRozmowy.cs</DependentUpon>
     </Compile>
+    <Compile Include="OknoZmianyHasla.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OknoZmianyHasla.Designer.cs">
+      <DependentUpon>OknoZmianyHasla.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TCP_Communication.cs" />
@@ -122,6 +128,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="OknoRozmowy.resx">
       <DependentUpon>OknoRozmowy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OknoZmianyHasla.resx">
+      <DependentUpon>OknoZmianyHasla.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

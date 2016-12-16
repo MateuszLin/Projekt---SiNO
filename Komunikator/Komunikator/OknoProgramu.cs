@@ -90,5 +90,11 @@ namespace Komunikator
                 oknoRozmowy.Show();
             }
         }
+
+        private void zmieńHasłoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OknoZmianyHasla oknoZmianyHasla = new OknoZmianyHasla();
+            oknoZmianyHasla.ShowDialog();
+        }
     }
 }

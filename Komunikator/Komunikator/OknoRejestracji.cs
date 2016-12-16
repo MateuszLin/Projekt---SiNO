@@ -19,14 +19,14 @@ namespace Komunikator
 
         private void acceptButton_Click(object sender, EventArgs e)
         {
-            if(passwordBox.Text != "") { }
-            if(repasswordBox.Text != "") { }
-            if(LoginBox.Text != "") { }
+            if(passwordBox.Text == "") { label4.Text = "*"; label7.Text = "Uzupełnij brakujące pola"; }
+            if(repasswordBox.Text == "") { label5.Text = "*"; label7.Text = "Uzupełnij brakujące pola"; }
+            if(LoginBox.Text == "") { label6.Text = "*"; label7.Text = "Uzupełnij brakujące pola"; }
 
             if ((passwordBox.Text != "") && (repasswordBox.Text != "") && (LoginBox.Text != "") 
                 && (passwordBox.Text == repasswordBox.Text))
             {
-                MessageBox.Show("Tu będzie wysłane zapytanie", "Zapytanie");
+                DataBase.addUser(LoginBox.Text, passwordBox.Text);
             }
             else if (passwordBox.Text != repasswordBox.Text)
             {

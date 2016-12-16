@@ -37,7 +37,7 @@
             this.szukajUżytkownikaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.oMnieToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.profilToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.zmieńHasłoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zmienHasloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listContact = new System.Windows.Forms.ListBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -67,21 +67,21 @@
             // oProgramieToolStripMenuItem
             // 
             this.oProgramieToolStripMenuItem.Name = "oProgramieToolStripMenuItem";
-            this.oProgramieToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.oProgramieToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.oProgramieToolStripMenuItem.Text = "O programie";
             this.oProgramieToolStripMenuItem.Click += new System.EventHandler(this.oProgramieToolStripMenuItem_Click);
             // 
             // wylogujToolStripMenuItem
             // 
             this.wylogujToolStripMenuItem.Name = "wylogujToolStripMenuItem";
-            this.wylogujToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.wylogujToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.wylogujToolStripMenuItem.Text = "Wyloguj";
             this.wylogujToolStripMenuItem.Click += new System.EventHandler(this.wylogujToolStripMenuItem_Click);
             // 
             // zakończToolStripMenuItem
             // 
             this.zakończToolStripMenuItem.Name = "zakończToolStripMenuItem";
-            this.zakończToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zakończToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.zakończToolStripMenuItem.Text = "Zakończ";
             this.zakończToolStripMenuItem.Click += new System.EventHandler(this.zakończToolStripMenuItem_Click);
             // 
@@ -104,7 +104,7 @@
             // 
             this.oMnieToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.profilToolStripMenuItem,
-            this.zmieńHasłoToolStripMenuItem});
+            this.zmienHasloToolStripMenuItem});
             this.oMnieToolStripMenuItem.Name = "oMnieToolStripMenuItem";
             this.oMnieToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
             this.oMnieToolStripMenuItem.Text = "Moje Konto";
@@ -112,14 +112,15 @@
             // profilToolStripMenuItem
             // 
             this.profilToolStripMenuItem.Name = "profilToolStripMenuItem";
-            this.profilToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.profilToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.profilToolStripMenuItem.Text = "Profil";
             // 
-            // zmieńHasłoToolStripMenuItem
+            // zmienHasloToolStripMenuItem
             // 
-            this.zmieńHasłoToolStripMenuItem.Name = "zmieńHasłoToolStripMenuItem";
-            this.zmieńHasłoToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
-            this.zmieńHasłoToolStripMenuItem.Text = "Zmień hasło";
+            this.zmienHasloToolStripMenuItem.Name = "zmienHasloToolStripMenuItem";
+            this.zmienHasloToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zmienHasloToolStripMenuItem.Text = "Zmień hasło";
+            this.zmienHasloToolStripMenuItem.Click += new System.EventHandler(this.zmieńHasłoToolStripMenuItem_Click);
             // 
             // listContact
             // 
@@ -159,7 +160,7 @@
         private System.Windows.Forms.ToolStripMenuItem profilToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem wylogujToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem zakończToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem zmieńHasłoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem zmienHasloToolStripMenuItem;
         private System.Windows.Forms.ListBox listContact;
     }
 }
