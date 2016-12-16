@@ -26,6 +26,7 @@ namespace Komunikator
             if ((passwordBox.Text != "") && (repasswordBox.Text != "") && (LoginBox.Text != "") 
                 && (passwordBox.Text == repasswordBox.Text))
             {
+                //OKODOWAC NA BOOLEAN I DODAC KOMUNIKATY ZE SIE UDALO LUB NIE !!!!!!
                 DataBase.addUser(LoginBox.Text, passwordBox.Text);
             }
             else if (passwordBox.Text != repasswordBox.Text)
