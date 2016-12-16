@@ -16,7 +16,9 @@ namespace Komunikator
         public OknoProgramu()
         {
             InitializeComponent();
+            
             loadContacts();
+
             //---------------ROZPOCZECIE TESTÓW-----------------
             Testy.StartTest();
         }

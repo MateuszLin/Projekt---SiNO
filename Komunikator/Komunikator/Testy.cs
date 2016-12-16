@@ -15,26 +15,6 @@ namespace Komunikator
             //test.UploadFileToFtp("ftp://sino.prv.pl/", "sciezka do pliku", "login", "password");
             test.UploadFileToFtp("ftp://sino.cba.pl/sino.cba.pl/", "sciezka do pliku", "login", "password");
         }
-        static bool Test_DB_connect()
-        {
-            //Console.WriteLine("Proba");
-            OracleConnection con = DataBase.getConnect();
-            //Console.WriteLine("Lacze sie z: " + con);
-            try
-            {
-                con.Open();
-                //Console.WriteLine("Polaczono");
-                return true;
-            }
-            catch (Exception)
-            {
-                //Console.WriteLine("Blad, ", msg);
-                return false;
-            }
-    
-        }
-      
-
 
         static void Test_DB_updateProfile()
         {
@@ -83,6 +63,23 @@ namespace Komunikator
             Console.WriteLine(DataBase.isOnline("Matek"));
             Console.WriteLine(DataBase.isOnline("Michal"));
         }
+
+        static void Test_DB_getContacts()
+        {
+            Console.WriteLine(DataBase.getContacts("Matek"));
+        }
+
+        static void Test_DB_isavaible()
+        {
+            Console.WriteLine(DataBase.isLoginAvaible("Dekiel"));
+        }
+
+        static void Test_DB_updatepass()
+        {
+            Console.WriteLine(DataBase.updatePass("Matek", "123"));
+        }
+
+
         public static void StartTest()
         {
             //Test1_Ftp_Upload();
@@ -95,8 +92,11 @@ namespace Komunikator
             // Test_DB_getinfo();
             //Test3_TCP_Server();
             //Test4_Ftp_Read();
-           // Test_DB_odbieranie();
+            // Test_DB_odbieranie();
             //Test_DB_isOnline();
+            //Test_DB_getContacts();
+            Test_DB_isavaible();
+            //Test_DB_updatepass();
         }
 
     }

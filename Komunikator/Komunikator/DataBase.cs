@@ -17,7 +17,7 @@ namespace Komunikator
         /// Funkcja zwracajaca dane polaczeniowe do bazy danych Oracle
         /// </summary>
         /// <returns>OracleConnection, polaczenie do bazy danych oracle</returns>
-        public static OracleConnection getConnect()
+        private static OracleConnection getConnect()
         {
             string host = "";
             int port = 0;
@@ -37,7 +37,7 @@ namespace Komunikator
 
 
         /// <summary>
-        /// Funkcja odczytujaca haslo uzytkownika z bazy danych.
+        /// Metoda odczytujaca haslo uzytkownika z bazy danych.
         /// </summary>
         /// <param name="loginn">string, login uzytkownika</param>
         /// <returns>string, haslo uzytkownika</returns>
@@ -71,7 +71,7 @@ namespace Komunikator
 
 
         /// <summary>
-        /// Funkcja aktualizujaca informacje o uzytkownikach
+        /// Metoda aktualizujaca informacje o uzytkownikach
         /// </summary>
         /// <param name="login"> string, login uzytkownika</param>
         /// <param name="upThing">string, co chcemy zaktualizowac (imie, nazwisko, miasto, email, nrtelefonu)</param>
@@ -90,7 +90,7 @@ namespace Komunikator
 
                 con.Open();
                 command.ExecuteNonQuery();
-                Console.WriteLine("Zaktualizowano informacje o uzytkowniku");
+       
                 con.Close();
                 con.Dispose();
             }
@@ -100,11 +100,11 @@ namespace Komunikator
 
 
         /// <summary>
-        /// Funkcja dodajaca uzytkownika do bazy danych
+        /// Metoda dodajaca uzytkownika do bazy danych
         /// </summary>
         /// <param name="login">string, login</param>
         /// <param name="password">string haslo</param>
-        public static void addUser(string login, string password)
+        public static Boolean addUser(string login, string password)
         {
             string cmd = "Insert into sinousers(login, pass) values(:login, :password)";
 
@@ -118,17 +118,21 @@ namespace Komunikator
 
                 con.Open();
                 command.ExecuteNonQuery();
-                Console.WriteLine("Dodano uzytkownika");
+            
                 con.Close();
                 con.Dispose();
-            }
-            catch (Exception e) { Console.WriteLine("Blad, " + e); }
 
+                return true;
+            }
+            catch (Exception e) { Console.WriteLine("Blad, " + e); return false; }
+
+            
         }
+        
 
 
         /// <summary>
-        /// Funkcja zwracajaca informacje uzytkownika o podanym loginie
+        /// Metoda zwracajaca informacje uzytkownika o podanym loginie
         /// </summary>
         /// <param name="login">string, login od ktorego chcemy uzyskac informacje</param>
         /// <returns></returns>
@@ -185,7 +189,7 @@ namespace Komunikator
 
 
         /// <summary>
-        /// Funckja wysylajaca wiadomosc
+        /// Metoda wysylajaca wiadomosc
         /// </summary>
         /// <param name="msg">string, wiadomosc</param>
         /// <param name="odbiorca">string, login odbiorcy</param>
@@ -216,7 +220,7 @@ namespace Komunikator
 
 
         /// <summary>
-        /// Funckja odbierajaca wiadomosci z bazy danych.
+        /// Metoda odbierajaca wiadomosci z bazy danych.
         /// </summary>
         /// <param name="odbiorca">string, login odbiorcy</param>
         /// <param name="nadawca">string, login nadawcy</param>
@@ -241,7 +245,8 @@ namespace Komunikator
                         while (reader.Read())
                         {
                             int msgIndex = reader.GetOrdinal("msg");
-                            msg += reader.GetString(msgIndex);
+                            if(!reader.IsDBNull(msgIndex)) msg += reader.GetString(msgIndex);
+
                         }
                     }
                 }
@@ -253,7 +258,7 @@ namespace Komunikator
             return msg;
         }
         /// <summary>
-        /// Funkcja sprawdzajaca czy uzytkownik o podanym loginie jest online
+        /// Metoda sprawdzajaca czy uzytkownik o podanym loginie jest online
         /// </summary>
         /// <param name="login">string, login uzytkownika</param>
         /// <returns></returns>
@@ -291,13 +296,13 @@ namespace Komunikator
 
         }
         /// <summary>
-        /// Funkcja wyszukujaca uzytkownikow
+        /// Metoda wyszukujaca uzytkownikow
         /// </summary>, 
         /// <param name="login">string, login uzytownika ktory wyszukuje</param>
         /// <param name="conditions">string, warunki po where kazdy z AND</param>
         /// <param name="conditionsTable">string[], tablica z parametrami do warunku</param>
         /// <returns></returns>
-        public static List<List<string>> searchUsers(string login, string conditions, string[] conditionsTable)
+        public static List<List<string>> searchUsers(string login, string conditions, List<string> conditionsTable)
         {
             List<List<string>> usersTable = new List<List<string>>();
             int counter = 0;
@@ -307,7 +312,7 @@ namespace Komunikator
                 OracleConnection con = getConnect();
                 OracleCommand command = new OracleCommand(cmd, con);
 
-                for (int i = 0; i < conditionsTable.Length; i++)
+                for (int i = 0; i < conditionsTable.Count; i++)
                 {
                     command.Parameters.Add(new OracleParameter("", conditionsTable[i]));
                 }
@@ -337,17 +342,134 @@ namespace Komunikator
                             }
 
                             counter += 1;
-
                         }
 
                     }
                 }
+                con.Close();
+                con.Dispose();
 
             }
             catch (Exception e) { Console.WriteLine("Blad, " + e); }
 
             return usersTable;
         }
+
+        /// <summary>
+        /// Metoda zwracajaca kontakty uzytkownika
+        /// </summary>
+        /// <param name="login">string, login uzytkownika</param>
+        /// <returns>string, kontakty uzytkownika</returns>
+        public static string getContacts(string login)
+        {
+            string cmd = "Select contacts from sinousers where login = :login";
+            string contacts = "";
+            try
+            {
+                OracleConnection con = getConnect();
+                OracleCommand command = new OracleCommand(cmd, con);
+                command.Parameters.Add(new OracleParameter("login", login));
+
+                con.Open();
+
+                using (DbDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while(reader.Read())
+                        {
+                            int contactsIndex = reader.GetOrdinal("contacts");
+                            if (!reader.IsDBNull(contactsIndex)) {contacts = reader.GetString(contactsIndex); }
+
+                        }
+                    }
+                }
+                con.Close();
+                con.Dispose();
+            }
+            catch (Exception e) { Console.WriteLine("Blad, " + e); }
+            return contacts;
+        }
+        /// <summary>
+        /// Metoda dodajaca uzytkownika do listy kontaktow
+        /// </summary>
+        /// <param name="login">string, login uzytkownika</param>
+        /// <param name="addLogin">string, login uzytkownika, ktorego chcemy dodac</param>
+        public static void addToContacts(string login, string addLogin)
+        {
+            string cmd = "Update sinousers Set contacts = :addLogin where login = :login";
+        }
+
+        /// <summary>
+        /// Metoda aktualizujaca haslo uzytkownika
+        /// </summary>
+        /// <param name="login">string, login uzytkownika</param>
+        /// <param name="pass">string, nowe haslo</param>
+        public static Boolean updatePass(string login, string pass)
+        {
+            string cmd = "Update sinousers Set PASS = :pass where login = :login";
+
+            try
+            {
+                OracleConnection con = getConnect();
+                OracleCommand command = new OracleCommand(cmd, con);
+
+                command.Parameters.Add(new OracleParameter("pass", pass));
+                command.Parameters.Add(new OracleParameter("login", login));
+
+                con.Open();
+                command.ExecuteNonQuery();
+
+                con.Close();
+                con.Dispose();
+                return true;
+            }
+            catch(Exception e) { Console.WriteLine("Blad, " + e); return false; }
+        }
+
+        /// <summary>
+        /// Metoda sprawdzajaca czy podany login istnieje juz w bazie
+        /// </summary>
+        /// <param name="login">string, login, ktory sprawdzic w bazie</param>
+        /// <returns>true - jezeli istnieje, false - jezeli nie istnieje</returns>
+        public static Boolean isLoginAvaible(string login)
+        {
+            string cmd = "Select count(login) counter from sinousers where login = :login";
+            try
+            {
+                OracleConnection con = getConnect();
+                OracleCommand command = new OracleCommand(cmd, con);
+
+                command.Parameters.Add(new OracleParameter("login", login));
+
+                con.Open();
+                using (DbDataReader reader = command.ExecuteReader())
+                {
+                    if(reader.HasRows)
+                    {
+                        while(reader.Read())
+                        {
+                            int counterIndex = reader.GetOrdinal("counter");
+                            int counter = reader.GetInt32(counterIndex);
+
+                            con.Close();
+                            con.Dispose();
+                            
+                            if (counter >= 1)
+                            {    
+                                return false;
+                            }
+                            return true;
+                        }
+                    }
+                }
+                
+            }
+            catch(Exception e) { Console.WriteLine("Blad, " + e);}
+
+            return true;
+        }
+
     }
 }
 

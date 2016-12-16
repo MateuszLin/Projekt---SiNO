@@ -31,52 +31,56 @@ namespace Komunikator
         private void Szukaj_Click_1(object sender, EventArgs e)
         {
             string conditions = " Where login != :login";
-            string[] conditionsTable = new string[] {GlobalVariables.login };
+            //string[] conditionsTable = new string[] {GlobalVariables.login };
+            List<string> conditionsList = new List<string>();
+            conditionsList.Add(GlobalVariables.login);
             if (loginBox.Text.Length != 0)
             {
                 conditions += " And login = :login";
-                conditionsTable[conditionsTable.Length] = loginBox.Text;
+                
+                conditionsList.Add(loginBox.Text);
             }
 
             if (imieBox.Text.Length != 0)
             {
                 conditions += " And imie = :imie";
-
-                conditionsTable[conditionsTable.Length] = imieBox.Text;
+                conditionsList.Add(imieBox.Text);
+                
             }
 
             if (nazwiskoBox.Text.Length != 0)
             {
                 conditions += " And nazwisko = :naziwsko";
-
-                conditionsTable[conditionsTable.Length] = nazwiskoBox.Text;
+                conditionsList.Add(nazwiskoBox.Text);
+                
             }
 
             if (miastoBox.Text.Length != 0)
             {
                 conditions += " And miasto = :miasto";
-
-                conditionsTable[conditionsTable.Length] = miastoBox.Text;
+                conditionsList.Add(miastoBox.Text);
+                
             }
 
             if (emailBox.Text.Length != 0)
             {
                 conditions += " And email = :email";
-
-                conditionsTable[conditionsTable.Length] = emailBox.Text;
+                conditionsList.Add(emailBox.Text);
+                
             }
 
             if (telefonBox.Text.Length != 0)
             {
                 conditions += " And nrtelefonu = :nrtelefonu";
-
-                conditionsTable[conditionsTable.Length] = telefonBox.Text;
+                conditionsList.Add(telefonBox.Text);
+                
             }
 
             
 
-            List<List<string>> usersTable = DataBase.searchUsers(GlobalVariables.login, conditions, conditionsTable);
+            List<List<string>> usersTable = DataBase.searchUsers(GlobalVariables.login, conditions, conditionsList);
 
+            userView.Items.Clear();
             for (int i = 0; i < usersTable.Count; i++)
             {
                 ListViewItem lvi = new ListViewItem(usersTable[i][0]);
