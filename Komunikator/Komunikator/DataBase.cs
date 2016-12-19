@@ -197,7 +197,7 @@ namespace Komunikator
         /// <param name="nadawca">string, login nadawcy</param>
         public static void sendMessage(string msg, string odbiorca, string nadawca)
         {
-            string cmd = "insert into sinorozmowy (msg, odiorca, nadawca, czas) values (:msg, :odbiorca, :nadawca, sysdate)";
+            string cmd = "insert into sinorozmowy (msg, odbiorca, nadawca, czas) values (:msg, :odbiorca, :nadawca, sysdate)";
 
             try
             {
