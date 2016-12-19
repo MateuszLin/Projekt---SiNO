@@ -24,11 +24,16 @@ namespace Komunikator
                 if(NewPasswdBox.Text == RePasswdBox.Text)
                 {
                     DataBase.updatePass(GlobalVariables.login, NewPasswdBox.Text);
+                    MessageBox.Show("Zmiany zapisano pomyślnie", "Hasło zmienione");
                 }
                 else
                 {
                     MessageBox.Show("Podane hasła są różne!", "Error");
                 }
+            }
+            else
+            {
+                MessageBox.Show("Stare hasło jest niepoprawne!", "Error");
             }
         }
 
