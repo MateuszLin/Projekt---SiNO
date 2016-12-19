@@ -95,7 +95,7 @@ namespace Komunikator
             // Test_DB_odbieranie();
             //Test_DB_isOnline();
             //Test_DB_getContacts();
-            Test_DB_isavaible();
+            //Test_DB_isavaible();
             //Test_DB_updatepass();
         }
 

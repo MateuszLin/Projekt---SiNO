@@ -136,10 +136,11 @@ namespace Komunikator
         /// </summary>
         /// <param name="login">string, login od ktorego chcemy uzyskac informacje</param>
         /// <returns></returns>
-        public static string[] getUserInfo(string login)
+        public static List<string> getUserInfo(string login)
         {
             string cmd = "Select login, imie, nazwisko, miasto, email, nrtelefonu from sinousers where login = :login";
-            string[] ret = new string[6];
+            
+            List<string> userInfo = new List<string>();
 
             try
             {
@@ -168,11 +169,11 @@ namespace Komunikator
                             {
                                 if (reader.IsDBNull(index[x]))
                                 {
-                                    ret[x] = " ";
+                                    userInfo.Add("");
                                 }
                                 else
-                                {
-                                    ret[x] = reader.GetString(index[x]);
+                                { 
+                                    userInfo.Add(reader.GetString(index[x]));
                                 }
                             }
 
@@ -184,7 +185,7 @@ namespace Komunikator
             }
             catch (Exception e) { Console.WriteLine("Blad, " + e); }
 
-            return ret;
+            return userInfo;
         }
 
 

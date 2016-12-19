@@ -23,7 +23,7 @@ namespace Komunikator
             {
                 if(NewPasswdBox.Text == RePasswdBox.Text)
                 {
-                    MessageBox.Show("Wysyłamy do DB");
+                    DataBase.updatePass(GlobalVariables.login, NewPasswdBox.Text);
                 }
                 else
                 {
