@@ -98,5 +98,11 @@ namespace Komunikator
             OknoZmianyHasla oknoZmianyHasla = new OknoZmianyHasla();
             oknoZmianyHasla.ShowDialog();
         }
+
+        private void profilToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OknoProfil profil = new OknoProfil();
+            profil.ShowDialog();
+        }
     }
 }

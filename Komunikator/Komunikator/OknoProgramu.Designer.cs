@@ -114,6 +114,7 @@
             this.profilToolStripMenuItem.Name = "profilToolStripMenuItem";
             this.profilToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.profilToolStripMenuItem.Text = "Profil";
+            this.profilToolStripMenuItem.Click += new System.EventHandler(this.profilToolStripMenuItem_Click);
             // 
             // zmienHasloToolStripMenuItem
             // 
