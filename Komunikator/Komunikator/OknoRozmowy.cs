@@ -35,7 +35,11 @@ namespace Komunikator
         private void buttonOdbierz_Click(object sender, EventArgs e)
         {
             Console.WriteLine("Naciśnięto Odbierz");
-            textBox2.Text += "\r\n" + "[" + loginRozmowcy + "] " + DataBase.getMessage(GlobalVariables.login, loginRozmowcy);
+            foreach(string msg in DataBase.getMessage(GlobalVariables.login, loginRozmowcy))
+            {
+                textBox2.Text += "\r\n" + "[" + loginRozmowcy + "]" + msg;
+            }
+            
         }
 
         private void buttonExit_Click(object sender, EventArgs e)

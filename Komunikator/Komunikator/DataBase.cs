@@ -11,19 +11,17 @@ namespace Komunikator
 {
     class DataBase
     {
-
-         
         /// <summary>
         /// Funkcja zwracajaca dane polaczeniowe do bazy danych Oracle
         /// </summary>
         /// <returns>OracleConnection, polaczenie do bazy danych oracle</returns>
         private static OracleConnection getConnect()
         {
-            string host = "";
-            int port = 0;
-            string sid = "";
-            string user = "";
-            string password = "";
+            string host = "oracle1.pkif.us.edu.pl";
+            int port = 1521;
+            string sid = "umain.pkif.us.edu.pl";
+            string user = "RT_mlindel";
+            string password = "oracle";
 
             string conString = "Data Source=(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = "
                  + host + ")(PORT = " + port + "))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = "
@@ -197,8 +195,7 @@ namespace Komunikator
         /// <param name="nadawca">string, login nadawcy</param>
         public static void sendMessage(string msg, string odbiorca, string nadawca)
         {
-            string cmd = "insert into sinorozmowy (msg, odbiorca, nadawca, czas) values (:msg, :odbiorca, :nadawca, sysdate)";
-
+            string cmd = "Insert into sinorozmowy (msg, odbiorca, nadawca, czas, flagaodbioru) values (:msg, :odbiorca, :nadawca, sysdate, 0)";
             try
             {
                 OracleConnection con = getConnect();
@@ -225,16 +222,15 @@ namespace Komunikator
         /// </summary>
         /// <param name="odbiorca">string, login odbiorcy</param>
         /// <param name="nadawca">string, login nadawcy</param>
-        /// <returns>string, wiadomosc dla obiorcy</returns>
-        public static string getMessage(string odbiorca, string nadawca)
+        /// <returns>List of strings, wiadomosc dla obiorcy</returns>
+        public static List<string> getMessage(string odbiorca, string nadawca)
         {
-            string cmd = "Select msg from sinorozmowy where nadawca = :nadawca and odbiorca = :odbiorca order by CZAS";
-            string msg = "";
+            string cmd = "Select msg from sinorozmowy where nadawca = :nadawca and odbiorca = :odbiorca and flagaodbioru = 0 order by CZAS";
+            List<string> messages = new List<string>();
             try
             {
                 OracleConnection con = getConnect();
                 OracleCommand command = new OracleCommand(cmd, con);
-
                 command.Parameters.Add(new OracleParameter("nadawca", nadawca));
                 command.Parameters.Add(new OracleParameter("odbiorca", odbiorca));
 
@@ -246,18 +242,34 @@ namespace Komunikator
                         while (reader.Read())
                         {
                             int msgIndex = reader.GetOrdinal("msg");
-                            if(!reader.IsDBNull(msgIndex)) msg += reader.GetString(msgIndex);
-
+                            if (!reader.IsDBNull(msgIndex)) messages.Add(reader.GetString(msgIndex));
                         }
                     }
+                }
+                
+
+                if (messages.Count > 0)
+                {
+                    cmd = "update SINOROZMOWY set flagaodbioru = 1 where nadawca = :nadawca and odbiorca = :odbiorca and flagaodbioru = 0";
+                    // OracleConnection conUpdate = getConnect();
+                    OracleCommand commandUpdate = new OracleCommand(cmd, con);// conUpdate);
+                    commandUpdate.Parameters.Add(new OracleParameter("nadawca", nadawca));
+                    commandUpdate.Parameters.Add(new OracleParameter("odiorca", odbiorca));
+                   // conUpdate.Open();
+                    commandUpdate.ExecuteNonQuery();
+
+                    //conUpdate.Close();
+                   // conUpdate.Dispose();
                 }
                 con.Close();
                 con.Dispose();
             }
             catch (Exception e) { Console.WriteLine("Blad, " + e); }
 
-            return msg;
+            return messages;
         }
+
+
         /// <summary>
         /// Metoda sprawdzajaca czy uzytkownik o podanym loginie jest online
         /// </summary>
@@ -293,9 +305,9 @@ namespace Komunikator
             catch (Exception e) { Console.WriteLine("Blad, " + e); }
 
             return isonline;
-
-
         }
+
+
         /// <summary>
         /// Metoda wyszukujaca uzytkownikow
         /// </summary>, 
@@ -356,6 +368,7 @@ namespace Komunikator
             return usersTable;
         }
 
+
         /// <summary>
         /// Metoda zwracajaca kontakty uzytkownika
         /// </summary>
@@ -391,6 +404,8 @@ namespace Komunikator
             catch (Exception e) { Console.WriteLine("Blad, " + e); }
             return contacts;
         }
+
+
         /// <summary>
         /// Metoda dodajaca uzytkownika do listy kontaktow
         /// </summary>
@@ -399,6 +414,7 @@ namespace Komunikator
         public static void addToContacts(string login, string addLogin)
         {
             string cmd = "Update sinousers Set contacts = :addLogin where login = :login";
+
         }
 
         /// <summary>
@@ -427,6 +443,7 @@ namespace Komunikator
             }
             catch(Exception e) { Console.WriteLine("Blad, " + e); return false; }
         }
+
 
         /// <summary>
         /// Metoda sprawdzajaca czy podany login istnieje juz w bazie
