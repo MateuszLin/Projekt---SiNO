@@ -18,7 +18,7 @@ namespace Komunikator
         private static OracleConnection getConnect()
         {
             string host = "";
-            int port = 0;
+            int port = 1;
             string sid = "";
             string user = "";
             string password = "";
