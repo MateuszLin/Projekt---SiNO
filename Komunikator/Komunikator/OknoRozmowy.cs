@@ -56,7 +56,11 @@ namespace Komunikator
             while (threadStatusOdbieranie)
             {
                 Console.WriteLine("Odbieranie....");
-                AppendTextBox("\r\n" + "[" + loginRozmowcy + "] " + DataBase.getMessage(GlobalVariables.login, loginRozmowcy));
+                //AppendTextBox("\r\n" + "[" + loginRozmowcy + "] " + DataBase.getMessage(GlobalVariables.login, loginRozmowcy));
+                foreach (string msg in DataBase.getMessage(GlobalVariables.login, loginRozmowcy))
+                {
+                    AppendTextBox("\r\n" + "[" + loginRozmowcy + "]" + msg);
+                }
                 System.Threading.Thread.Sleep(1000);
             }
         }
