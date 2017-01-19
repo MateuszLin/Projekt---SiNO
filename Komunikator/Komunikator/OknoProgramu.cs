@@ -18,6 +18,7 @@ namespace Komunikator
             InitializeComponent();
             
             loadContacts();
+            DataBase.setStatus(GlobalVariables.login, 1);
 
             //---------------ROZPOCZECIE TESTÓW-----------------
             Testy.StartTest();
@@ -34,6 +35,7 @@ namespace Komunikator
         private void wylogujToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //this.Close();
+            DataBase.setStatus(GlobalVariables.login, 0);
             this.Hide();
             OknoLogowania oknoLogowania = new OknoLogowania();
             oknoLogowania.Show();
@@ -41,6 +43,7 @@ namespace Komunikator
 
         private void zakończToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            DataBase.setStatus(GlobalVariables.login, 0);
             Application.Exit();
         }
 

@@ -40,6 +40,15 @@ namespace Komunikator
             }
 
         }
+        
+        
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                buttonWyslij_Click((object)sender, (EventArgs)e);
+            }
+        }
 
         private void buttonOdbierz_Click(object sender, EventArgs e)
         {
@@ -70,6 +79,7 @@ namespace Komunikator
             threadStatusOdbieranie = false;
             this.Hide();
         }
+
 
         public void AppendTextBox(string value)
         {

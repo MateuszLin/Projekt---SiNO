@@ -17,11 +17,11 @@ namespace Komunikator
         /// <returns>OracleConnection, polaczenie do bazy danych oracle</returns>
         private static OracleConnection getConnect()
         {
-            string host = "oracle1.pkif.us.edu.pl";
-            int port = 1521;
-            string sid = "umain.pkif.us.edu.pl";
-            string user = "RT_mlindel";
-            string password = "oracle";
+            string host = "";
+            int port = 0;
+            string sid = "";
+            string user = "";
+            string password = "";
 
             string conString = "Data Source=(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = "
                  + host + ")(PORT = " + port + "))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = "
@@ -263,6 +263,29 @@ namespace Komunikator
             catch (Exception e) { Console.WriteLine("Blad, " + e); }
 
             return messages;
+        }
+
+        /// <summary>
+        /// Funkcja ustawiająca status w komunikatorze
+        /// </summary>
+        /// <param name="login">str, login uzytkownika</param>
+        /// <param name="status">int, status do ustawienia 1 - online 0 - offline</param>
+        public static void setStatus(string login, int status)
+        {
+            string cmd = "Update sinousers SET status = :status where login = :login";
+            try
+            {
+                OracleConnection con = getConnect();
+                OracleCommand command = new OracleCommand(cmd, con);
+                command.Parameters.Add(new OracleParameter("status", status));
+                command.Parameters.Add(new OracleParameter("login", login));
+
+                con.Open();
+                command.ExecuteNonQuery();
+                con.Close();
+                con.Dispose();
+            }
+            catch(Exception e) { Console.WriteLine("Blad " + e); }
         }
 
 

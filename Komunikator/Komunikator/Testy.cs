@@ -79,6 +79,12 @@ namespace Komunikator
             Console.WriteLine(DataBase.updatePass("Matek", "123"));
         }
 
+        static void Test_DB_status()
+        {
+            DataBase.setStatus("Matek", 1);
+            Console.WriteLine("Ustawilem");
+        }
+
 
         public static void StartTest()
         {
@@ -97,6 +103,7 @@ namespace Komunikator
             //Test_DB_getContacts();
             //Test_DB_isavaible();
             //Test_DB_updatepass();
+            Test_DB_status();
         }
 
     }
