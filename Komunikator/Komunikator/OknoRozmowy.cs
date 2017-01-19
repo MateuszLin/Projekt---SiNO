@@ -6,17 +6,25 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Komunikator
 {
     public partial class OknoRozmowy : Form
     {
+
+        Boolean threadStatusOdbieranie;
         string loginRozmowcy;
+        //Thread odbieranieThread;
         public OknoRozmowy(string loginRozmowcy2)
         {
             loginRozmowcy = loginRozmowcy2;
-            InitializeComponent();     
+            InitializeComponent();
+            //rozppoczęcie nowego wątku odpowiedzialnego za odbieranie wiadomości
+            threadStatusOdbieranie = true;
+            Thread odbieranieThread = new Thread(this.Odbierz);
+            odbieranieThread.Start();
         }
 
         private void buttonWyslij_Click(object sender, EventArgs e)
@@ -26,7 +34,8 @@ namespace Komunikator
             if(textBox1.Text != "")
             {
                 DataBase.sendMessage(textBox1.Text, loginRozmowcy, GlobalVariables.login);
-                textBox2.Text += "\r\n" + "[" + GlobalVariables.login + "] " + textBox1.Text;
+                //textBox2.Text += "\r\n" + "[" + GlobalVariables.login + "] " + textBox1.Text;
+                AppendTextBox("\r\n" + "[" + GlobalVariables.login + "] " + textBox1.Text);
                 textBox1.Clear();
             }
 
@@ -35,19 +44,37 @@ namespace Komunikator
         private void buttonOdbierz_Click(object sender, EventArgs e)
         {
             Console.WriteLine("Naciśnięto Odbierz");
-            textBox2.Text += "\r\n" + "[" + loginRozmowcy + "] " + DataBase.getMessage(GlobalVariables.login, loginRozmowcy);
+            //textBox2.Text += "\r\n" + "[" + loginRozmowcy + "] " + DataBase.getMessage(GlobalVariables.login, loginRozmowcy);
+            AppendTextBox("\r\n" + "[" + loginRozmowcy + "] " + DataBase.getMessage(GlobalVariables.login, loginRozmowcy));
+
         }
 
-        private void buttonExit_Click(object sender, EventArgs e)
+        void Odbierz()
         {
-            Application.Exit();
+            while (threadStatusOdbieranie)
+            {
+                Console.WriteLine("Odbieranie....");
+                AppendTextBox("\r\n" + "[" + loginRozmowcy + "] " + DataBase.getMessage(GlobalVariables.login, loginRozmowcy));
+                System.Threading.Thread.Sleep(1000);
+            }
         }
 
-        private void buttonLogout_Click(object sender, EventArgs e)
+        protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            this.Close();
-            OknoLogowania oknoLogowania = new OknoLogowania();
-            oknoLogowania.Show();
+            threadStatusOdbieranie = false;
+            this.Hide();
         }
+
+        public void AppendTextBox(string value)
+        {
+            if (InvokeRequired)
+            {
+                this.Invoke(new Action<string>(AppendTextBox), new object[] { value });
+                return;
+            }
+            textBox2.Text += value;
+        }
+
+
     }
 }
