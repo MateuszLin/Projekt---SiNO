@@ -56,7 +56,7 @@ namespace Komunikator
 
         private void szukajUżytkownikaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OknoSzukajKontaktu szukaj = new OknoSzukajKontaktu();
+            OknoSzukajKontaktu szukaj = new OknoSzukajKontaktu(this);
             szukaj.Show();
         }
 
@@ -72,17 +72,21 @@ namespace Komunikator
         }
         */
 
-        private void loadContacts()
+        public void loadContacts()
         {
-            List<string> testList = new List<string>(new string[] { "admin", "Matek", "Michal"});
-            foreach (string name in testList)
+            listContact.Items.Clear();
+            List<string> contactsList = DataBase.getContacts(GlobalVariables.login);
+            foreach (string name in contactsList)
             {
                 listContact.Items.Add(name);
+
             }
             //Dodanie obsługi listContact_MouseDoubleClick
             listContact.MouseDoubleClick += new MouseEventHandler(listContact_MouseDoubleClick);
 
+
         }
+
 
         /// <summary>
         /// Funkcja która opisuje co się dzieje gdy dwukrotnie naciskamy na obiekt na liście kontaktów.
@@ -126,5 +130,6 @@ namespace Komunikator
         {
 
         }
+
     }
 }

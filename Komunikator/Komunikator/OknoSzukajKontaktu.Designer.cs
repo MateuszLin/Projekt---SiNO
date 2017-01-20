@@ -68,7 +68,7 @@
             this.userView.TabIndex = 0;
             this.userView.UseCompatibleStateImageBehavior = false;
             this.userView.View = System.Windows.Forms.View.Details;
-            this.userView.SelectedIndexChanged += new System.EventHandler(this.userView_SelectedIndexChanged);
+            
             // 
             // Login
             // 
@@ -242,7 +242,6 @@
             this.Controls.Add(this.userView);
             this.Name = "OknoSzukajKontaktu";
             this.Text = "Szukaj kontaktu";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

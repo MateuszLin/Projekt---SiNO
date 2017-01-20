@@ -12,26 +12,33 @@ namespace Komunikator
 {
     public partial class OknoSzukajKontaktu : Form
     {
-        public OknoSzukajKontaktu()
+        private OknoProgramu objj;
+        public OknoSzukajKontaktu(OknoProgramu obj)
         {
+            this.objj = obj;
             InitializeComponent();
+            userView.MouseDoubleClick += new MouseEventHandler(userView_MouseDoubleClick);
+          
         }
 
-
-        private void Form1_Load(object sender, EventArgs e)
+        private void userView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-
-        }
-
-        private void userView_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
+            if (DataBase.addToContacts(GlobalVariables.login, userView.SelectedItems[0].SubItems[0].Text))
+            {
+                MessageBox.Show("Dodano poprawnie kontakt do listy", "SUKCES");
+                objj.loadContacts();
+            }
+            else
+            {
+                MessageBox.Show("Nie można dodać kontaktu do listy", "ERROR");
+            }
+            
         }
 
         private void Szukaj_Click_1(object sender, EventArgs e)
         {
             string conditions = " Where login != :login";
-            //string[] conditionsTable = new string[] {GlobalVariables.login };
+           
             List<string> conditionsList = new List<string>();
             conditionsList.Add(GlobalVariables.login);
             if (loginBox.Text.Length != 0)
@@ -96,6 +103,7 @@ namespace Komunikator
 
         private void Zamknij_Click_1(object sender, EventArgs e)
         {
+            
             this.Close();
         }
     }

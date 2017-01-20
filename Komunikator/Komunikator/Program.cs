@@ -16,7 +16,6 @@ namespace Komunikator
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new OknoRozmowy());
             Application.Run(new OknoLogowania());
         }
     }

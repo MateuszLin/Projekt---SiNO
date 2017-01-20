@@ -66,7 +66,10 @@ namespace Komunikator
 
         static void Test_DB_getContacts()
         {
-            Console.WriteLine(DataBase.getContacts("Matek"));
+            foreach(string e in DataBase.getContacts("Mateusz"))
+            {
+                Console.WriteLine(e);
+            }
         }
 
         static void Test_DB_isavaible()
@@ -104,6 +107,7 @@ namespace Komunikator
             //Test_DB_isavaible();
             //Test_DB_updatepass();
             //Test_DB_status();
+            
         }
 
     }

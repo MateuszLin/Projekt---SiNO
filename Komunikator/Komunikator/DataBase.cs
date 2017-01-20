@@ -42,7 +42,7 @@ namespace Komunikator
         /// <returns>string, haslo uzytkownika</returns>
         public static string getPassword(string loginn)
         {
-            string pass = "NULL";
+            string pass = null;
             string cmd = "Select pass from sinousers where login = :login";
             try
             {
@@ -394,10 +394,11 @@ namespace Komunikator
         /// </summary>
         /// <param name="login">string, login uzytkownika</param>
         /// <returns>string, kontakty uzytkownika</returns>
-        public static string getContacts(string login)
+        public static List<string> getContacts(string login)
         {
             string cmd = "Select contacts from sinousers where login = :login";
             string contacts = "";
+            List < String > contactsList = new List<String>();
             try
             {
                 OracleConnection con = getConnect();
@@ -414,7 +415,7 @@ namespace Komunikator
                         {
                             int contactsIndex = reader.GetOrdinal("contacts");
                             if (!reader.IsDBNull(contactsIndex)) {contacts = reader.GetString(contactsIndex); }
-
+                            contactsList = contacts.Split(',').ToList();
                         }
                     }
                 }
@@ -422,7 +423,7 @@ namespace Komunikator
                 con.Dispose();
             }
             catch (Exception e) { Console.WriteLine("Blad, " + e); }
-            return contacts;
+            return contactsList;
         }
 
 
@@ -431,9 +432,34 @@ namespace Komunikator
         /// </summary>
         /// <param name="login">string, login uzytkownika</param>
         /// <param name="addLogin">string, login uzytkownika, ktorego chcemy dodac</param>
-        public static void addToContacts(string login, string addLogin)
+        public static Boolean addToContacts(string login, string addLogin)
         {
-            string cmd = "Update sinousers Set contacts = :addLogin where login = :login";
+            List<string> contactsList = getContacts(login);
+            foreach(string name in contactsList)
+            {
+                if (name == addLogin)
+                {
+                    return false;
+                }
+            }
+            contactsList.Add(addLogin);
+            string contactsString = String.Join(",", contactsList.ToArray());
+            string cmd = "Update sinousers Set contacts = :contactsString where login = :login";
+            try
+            {
+                OracleConnection con = getConnect();
+                OracleCommand command = new OracleCommand(cmd, con);
+                command.Parameters.Add(new OracleParameter("contactsString", contactsString));
+                command.Parameters.Add(new OracleParameter("login", login));
+
+                con.Open();
+                command.ExecuteNonQuery();
+                con.Close();
+                con.Dispose();
+
+                return true;
+            }
+            catch(Exception e) { Console.WriteLine("Blad, " + e); return false; }
 
         }
 
