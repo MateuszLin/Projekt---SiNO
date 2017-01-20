@@ -13,6 +13,7 @@ namespace Komunikator
 {
     public partial class OknoProgramu : Form
     {
+
         public OknoProgramu()
         {
             InitializeComponent();
@@ -106,6 +107,24 @@ namespace Komunikator
         {
             OknoProfil profil = new OknoProfil();
             profil.ShowDialog();
+        }
+
+
+        private void OknoProgramu_FormClosed(object sender, FormClosedEventArgs e)
+        {
+
+                DataBase.setStatus(GlobalVariables.login, 0);            
+        }
+
+
+        private void OknoProgramu_FormClosing(object sender, FormClosingEventArgs e)
+        {
+                DataBase.setStatus(GlobalVariables.login, 0);          
+        }
+
+        private void OknoProgramu_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -112,14 +112,14 @@
             // profilToolStripMenuItem
             // 
             this.profilToolStripMenuItem.Name = "profilToolStripMenuItem";
-            this.profilToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.profilToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.profilToolStripMenuItem.Text = "Profil";
             this.profilToolStripMenuItem.Click += new System.EventHandler(this.profilToolStripMenuItem_Click);
             // 
             // zmienHasloToolStripMenuItem
             // 
             this.zmienHasloToolStripMenuItem.Name = "zmienHasloToolStripMenuItem";
-            this.zmienHasloToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zmienHasloToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.zmienHasloToolStripMenuItem.Text = "Zmień hasło";
             this.zmienHasloToolStripMenuItem.Click += new System.EventHandler(this.zmieńHasłoToolStripMenuItem_Click);
             // 
@@ -143,6 +143,9 @@
             this.Name = "OknoProgramu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "OknoProgramu";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OknoProgramu_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OknoProgramu_FormClosed);
+            this.Load += new System.EventHandler(this.OknoProgramu_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

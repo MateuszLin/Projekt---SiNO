@@ -26,8 +26,24 @@ namespace Komunikator
             if ((passwordBox.Text != "") && (repasswordBox.Text != "") && (LoginBox.Text != "") 
                 && (passwordBox.Text == repasswordBox.Text))
             {
-                //OKODOWAC NA BOOLEAN I DODAC KOMUNIKATY ZE SIE UDALO LUB NIE !!!!!!
-                DataBase.addUser(LoginBox.Text, passwordBox.Text);
+                
+                if (DataBase.isLoginAvaible(LoginBox.Text))
+                {
+                    bool succesAdd = DataBase.addUser(LoginBox.Text, passwordBox.Text);
+                    if (succesAdd)
+                    {
+                        MessageBox.Show("Konto zostało założone poprawnie.\nMożesz zalogować się na swoje konto.", "SUKCES");
+                        this.Hide();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Konto nie zostało założone, spróbuj ponownie później", "ERROR");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Podany login jest już zajęty!", "ERROR");
+                }
             }
             else if (passwordBox.Text != repasswordBox.Text)
             {
