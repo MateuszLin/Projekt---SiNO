@@ -12,7 +12,7 @@ namespace Komunikator
     class DataBase
     {
         /// <summary>
-        /// Funkcja zwracajaca dane polaczeniowe do bazy danych Oracle
+        /// Metoda zwracajaca dane polaczeniowe do bazy danych Oracle
         /// </summary>
         /// <returns>OracleConnection, polaczenie do bazy danych oracle</returns>
         private static OracleConnection getConnect()
@@ -267,7 +267,7 @@ namespace Komunikator
         }
 
         /// <summary>
-        /// Funkcja ustawiająca status w komunikatorze
+        /// Metoda ustawiająca status w komunikatorze
         /// </summary>
         /// <param name="login">str, login uzytkownika</param>
         /// <param name="status">int, status do ustawienia 1 - online 0 - offline</param>
