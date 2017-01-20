@@ -1,3 +1,1 @@
-- dodanie listy kontaktów;
 - dla kazdego kontaktu jego status;
-
