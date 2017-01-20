@@ -103,7 +103,7 @@ namespace Komunikator
             //Test_DB_getContacts();
             //Test_DB_isavaible();
             //Test_DB_updatepass();
-            Test_DB_status();
+            //Test_DB_status();
         }
 
     }

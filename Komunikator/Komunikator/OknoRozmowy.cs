@@ -34,21 +34,12 @@ namespace Komunikator
             if(textBox1.Text != "")
             {
                 DataBase.sendMessage(textBox1.Text, loginRozmowcy, GlobalVariables.login);
-                //textBox2.Text += "\r\n" + "[" + GlobalVariables.login + "] " + textBox1.Text;
                 AppendTextBox("\r\n" + "[" + GlobalVariables.login + "] " + textBox1.Text);
                 textBox1.Clear();
             }
 
         }
         
-        
-        private void textBox1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                buttonWyslij_Click((object)sender, (EventArgs)e);
-            }
-        }
 
         private void buttonOdbierz_Click(object sender, EventArgs e)
         {
