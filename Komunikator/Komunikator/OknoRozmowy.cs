@@ -18,8 +18,9 @@ namespace Komunikator
         string loginRozmowcy;
         public OknoRozmowy(string loginRozmowcy2)
         {
-            loginRozmowcy = loginRozmowcy2;
             InitializeComponent();
+            loginRozmowcy = loginRozmowcy2;
+            
             //rozppoczęcie nowego wątku odpowiedzialnego za odbieranie wiadomości
             threadStatusOdbieranie = true;
             Thread odbieranieThread = new Thread(this.Odbierz);
@@ -77,6 +78,8 @@ namespace Komunikator
                 return;
             }
             textBox2.Text += value;
+            textBox2.Select(textBox2.Text.Length, 0);
+            textBox2.ScrollToCaret();
         }
     }
 }
