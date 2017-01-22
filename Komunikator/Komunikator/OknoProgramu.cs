@@ -26,9 +26,6 @@ namespace Komunikator
             Testy.StartTest();
         }
 
-
-        // Poniższa metoda nie działa poprawnie ponieważ w metodzie wyloguj używamy this.Close() 
-        // Więc po nadpisaniu metody Close() opcja wyloguj kończy aplikację.
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             Application.Exit();
@@ -60,8 +57,10 @@ namespace Komunikator
             szukaj.Show();
         }
 
-
-        private void loadContacts()
+        /// <summary>
+        /// Funkcja pobierająca listę kontaktów z Bazy Danych
+        /// </summary>
+        public void loadContacts()
         {
             listContact.Items.Clear();
             List<string> contactsList = DataBase.getContacts(GlobalVariables.login);
@@ -114,11 +113,5 @@ namespace Komunikator
         {
                 DataBase.setStatus(GlobalVariables.login, 0);          
         }
-
-        private void OknoProgramu_Load(object sender, EventArgs e)
-        {
-
-        }
-
     }
 }

@@ -16,7 +16,6 @@ namespace Komunikator
 
         Boolean threadStatusOdbieranie;
         string loginRozmowcy;
-        //Thread odbieranieThread;
         public OknoRozmowy(string loginRozmowcy2)
         {
             loginRozmowcy = loginRozmowcy2;
@@ -38,25 +37,13 @@ namespace Komunikator
                 textBox1.Clear();
             }
 
-        }
-        
-
-        private void buttonOdbierz_Click(object sender, EventArgs e)
-        {
-            Console.WriteLine("Naciśnięto Odbierz");
-
-            foreach(string msg in DataBase.getMessage(GlobalVariables.login, loginRozmowcy))
-            {
-                textBox2.Text += "\r\n" + "[" + loginRozmowcy + "]" + msg;
-            }
-        }
+        } 
 
         void Odbierz()
         {
             while (threadStatusOdbieranie)
             {
                 Console.WriteLine("Odbieranie....");
-                //AppendTextBox("\r\n" + "[" + loginRozmowcy + "] " + DataBase.getMessage(GlobalVariables.login, loginRozmowcy));
                 foreach (string msg in DataBase.getMessage(GlobalVariables.login, loginRozmowcy))
                 {
                     AppendTextBox("\r\n" + "[" + loginRozmowcy + "]" + msg);

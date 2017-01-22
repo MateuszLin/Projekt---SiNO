@@ -8,6 +8,7 @@ namespace Komunikator
 {
     static class GlobalVariables
     {
+        //Właściwość przechowująca razy można podać błędne hasło (_loginCounter + 1)
         private static int _loginCounter = 2;
 
         public static int loginCounter

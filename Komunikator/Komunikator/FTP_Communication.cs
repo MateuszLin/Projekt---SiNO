@@ -10,6 +10,11 @@ namespace Komunikator
 {
     public class FTP_Communication
     {
+        /// <summary>
+        /// Funkcja wrzucająca na serwer FTP plik z podanej lokalizacji
+        /// </summary>
+        /// <param name="url">adres serwera FTP</param>
+        /// <param name="filePath">Ścieżka do pliku</param>
         public void UploadFileToFtp(string url, string filePath, string username, string password)
         {
             var fileName = Path.GetFileName(filePath);

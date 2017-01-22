@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.buttonWyslij = new System.Windows.Forms.Button();
-            this.buttonOdbierz = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -45,16 +44,6 @@
             this.buttonWyslij.Text = "Wyślij";
             this.buttonWyslij.UseVisualStyleBackColor = true;
             this.buttonWyslij.Click += new System.EventHandler(this.buttonWyslij_Click);
-            // 
-            // buttonOdbierz
-            // 
-            this.buttonOdbierz.Location = new System.Drawing.Point(294, 126);
-            this.buttonOdbierz.Name = "buttonOdbierz";
-            this.buttonOdbierz.Size = new System.Drawing.Size(75, 23);
-            this.buttonOdbierz.TabIndex = 1;
-            this.buttonOdbierz.Text = "Odbierz";
-            this.buttonOdbierz.UseVisualStyleBackColor = true;
-            this.buttonOdbierz.Click += new System.EventHandler(this.buttonOdbierz_Click);
             // 
             // textBox1
             // 
@@ -88,7 +77,6 @@
             this.ClientSize = new System.Drawing.Size(390, 261);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.buttonOdbierz);
             this.Controls.Add(this.buttonWyslij);
             this.Name = "OknoRozmowy";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -101,7 +89,6 @@
         #endregion
 
         private System.Windows.Forms.Button buttonWyslij;
-        private System.Windows.Forms.Button buttonOdbierz;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;

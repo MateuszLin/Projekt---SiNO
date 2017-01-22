@@ -156,7 +156,6 @@
             this.Text = "OknoProgramu";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OknoProgramu_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OknoProgramu_FormClosed);
-            this.Load += new System.EventHandler(this.OknoProgramu_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
