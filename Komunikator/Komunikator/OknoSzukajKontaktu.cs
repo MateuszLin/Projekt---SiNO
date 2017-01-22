@@ -84,7 +84,6 @@ namespace Komunikator
             }
 
             
-
             List<List<string>> usersTable = DataBase.searchUsers(GlobalVariables.login, conditions, conditionsList);
 
             userView.Items.Clear();
@@ -97,13 +96,10 @@ namespace Komunikator
                 }
                 userView.Items.Add(lvi);
             }
-
-
         }
 
         private void Zamknij_Click_1(object sender, EventArgs e)
         {
-            
             this.Close();
         }
     }

@@ -92,9 +92,7 @@ namespace Komunikator
         public static void StartTest()
         {
             //Test1_Ftp_Upload();
-
             //Test_DB_connect();
-
             //Test_DB_getpass();
             //Test_DB_updateProfile();
             //Test_DB_addUser();

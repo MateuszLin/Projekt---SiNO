@@ -39,6 +39,11 @@ namespace Komunikator
 
         } 
 
+        /// <summary>
+        /// Funkcja odpowiedzialna za automatyczne czasowe odbieranie wiadomości.
+        /// Czas odświeżania definiowany w Thread.Sleep.
+        /// Funkcja działa na osobnym wątku.
+        /// </summary>
         void Odbierz()
         {
             while (threadStatusOdbieranie)
@@ -58,7 +63,12 @@ namespace Komunikator
             this.Hide();
         }
 
-
+        /// <summary>
+        /// Funkcja odpowiedzialna za przekazywanie tekstu z nowego wątku 
+        /// Do elementu textBox utworzonego przez inny wątek.
+        /// </summary>
+        /// <param name="value">Wiadomość która ma zostać dodana do 
+        /// elementu textBox2</param>
         public void AppendTextBox(string value)
         {
             if (InvokeRequired)
@@ -68,7 +78,5 @@ namespace Komunikator
             }
             textBox2.Text += value;
         }
-
-
     }
 }

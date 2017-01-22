@@ -10,16 +10,16 @@ namespace Komunikator
 {
     class TCP_Communication
     {
+        /// <summary>
+        /// Funkcja testowa servera do sprawdzenia komunikacji z klientem TCP
+        /// </summary>
         public void Server()
         {
             try
             {
-                //IPAddress ipAd = IPAddress.Parse("Wpisz IP");  //działał na porcie 5442
                 IPAddress ipAd = IPAddress.Parse("Wpisz IP");
 
                 TcpListener myList = new TcpListener(ipAd, 5442);
-                //TcpListener myList = new TcpListener(IPAddress.Any, 5442);
-
                 myList.Start();
 
                 Console.WriteLine("Serwer uruchominy na porcie 8001");
