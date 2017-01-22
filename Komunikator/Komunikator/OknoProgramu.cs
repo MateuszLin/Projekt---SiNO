@@ -16,6 +16,7 @@ namespace Komunikator
         public OknoProgramu()
         {
             InitializeComponent();
+            label1.Text = String.Format("Zalogowano: {0}", GlobalVariables.login);
             
             loadContacts();
 
@@ -33,7 +34,6 @@ namespace Komunikator
 
         private void wylogujToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //this.Close();
             this.Hide();
             OknoLogowania oknoLogowania = new OknoLogowania();
             oknoLogowania.Show();
