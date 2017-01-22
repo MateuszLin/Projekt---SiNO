@@ -56,18 +56,6 @@ namespace Komunikator
             szukaj.Show();
         }
 
-        // Poniższa metoda nie działa ponieważ w metodzie wyloguj używamy this.Close() 
-        // Więc po nadpisaniu metody Close() opcja wyloguj kończy aplikację.
-        /*
-        /// <summary>
-        /// Metoda nadpisuje przycisk okna X aby on nie zamykał formatki lecz cały program.
-        /// </summary>
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            Application.Exit();
-        }
-        */
-
         private void loadContacts()
         {
             List<string> testList = new List<string>(new string[] { "admin", "Matek", "Michal"});
