@@ -15,9 +15,13 @@ namespace Komunikator
         public OknoLogowania()
         {
             InitializeComponent();
-            //Wartości wpisane tymczasow - żeby nie trzeba było wpisywać ręcznie.
-            LoginBox.Text = "admin";
-            PasswordBox.Text = "admin";
+            //Wartości wpisane automatycznie tylko dla trybu DEBUG - żeby nie trzeba było wpisywać ręcznie.
+            #if (DEBUG)
+            {
+                LoginBox.Text = "admin";
+                PasswordBox.Text = "admin";
+            }
+            #endif
         }
 
         private void buttonLogin_Click(object sender, EventArgs e)

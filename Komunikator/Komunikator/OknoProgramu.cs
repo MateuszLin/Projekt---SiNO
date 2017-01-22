@@ -17,6 +17,7 @@ namespace Komunikator
         public OknoProgramu()
         {
             InitializeComponent();
+            label1.Text = String.Format("Zalogowano: {0}", GlobalVariables.login);
             
             loadContacts();
             DataBase.setStatus(GlobalVariables.login, 1);
@@ -35,7 +36,6 @@ namespace Komunikator
 
         private void wylogujToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //this.Close();
             DataBase.setStatus(GlobalVariables.login, 0);
             this.Hide();
             OknoLogowania oknoLogowania = new OknoLogowania();
@@ -60,19 +60,8 @@ namespace Komunikator
             szukaj.Show();
         }
 
-        // Poniższa metoda nie działa ponieważ w metodzie wyloguj używamy this.Close() 
-        // Więc po nadpisaniu metody Close() opcja wyloguj kończy aplikację.
-        /*
-        /// <summary>
-        /// Metoda nadpisuje przycisk okna X aby on nie zamykał formatki lecz cały program.
-        /// </summary>
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            Application.Exit();
-        }
-        */
 
-        public void loadContacts()
+        private void loadContacts()
         {
             listContact.Items.Clear();
             List<string> contactsList = DataBase.getContacts(GlobalVariables.login);
