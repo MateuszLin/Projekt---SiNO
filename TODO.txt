@@ -1,3 +1,5 @@
 - dla kazdego kontaktu jego status (w kodzie programu status jest okodowany) wiêc tylko wyœwietlanie
 - data i godzina przy wysy³aniu/odbieraniu wiadomoœci
-
+- Archiwum
+- Rozmowa z ... login
+- 
